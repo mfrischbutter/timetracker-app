@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:timetracker_app/models/items.dart';
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
 
 import 'package:timetracker_app/provider/auth.dart';
@@ -45,13 +44,10 @@ class ApiService {
     );
 
     validateResponseStatus(response.statusCode, 200);
-
     List<dynamic> apiResponse = json.decode(response.body);
-    print(apiResponse[0]);
-    List<dynamic> data = apiResponse;
-
-    List<Items> items = dataFromJson(json.encode(data));
-
+    print(apiResponse);
+    List<Items> items = itemsFromResponse(apiResponse);
+    print(items);
     return ItemsResponse(items);
   }
 }

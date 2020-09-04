@@ -22,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final items = Provider.of<ItemsProvider>(context).items;
+    var items = Provider.of<ItemsProvider>(context).items;
 
     return Scaffold(
         body: SafeArea(
@@ -33,8 +33,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         enablePullUp: false,
         onRefresh: _onRefresh,
         child: ListView.builder(
-          itemBuilder: (context, index) =>
-              Card(child: Center(child: Text('2'))),
+          itemBuilder: (context, i) => Card(
+            child: Column(
+              children: [
+                Text('items[i].id.toString()'),
+              ],
+            ),
+          ),
           itemExtent: 100.0,
           itemCount: items.length,
         ),
