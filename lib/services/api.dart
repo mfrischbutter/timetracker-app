@@ -1,24 +1,23 @@
 import 'package:http/http.dart' as http;
-import 'package:timetracker_app/models/data.dart';
+import 'package:timetracker_app/models/items.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
 import 'package:timetracker_app/provider/auth.dart';
-import 'package:timetracker_app/utils/data_response.dart';
+import 'package:timetracker_app/utils/items_response.dart';
 import 'package:timetracker_app/utils/exceptions.dart';
 
 class ApiService {
-
   AuthProvider authProvider;
-  String token;
+  String sessionId;
 
   // The AuthProvider is passed in when this class instantiated.
   // This provides access to the user token required for API calls.
   // It also allows us to log out a user when their token expires.
   ApiService(AuthProvider authProvider) {
     this.authProvider = authProvider;
-    this.token = authProvider.sessionId;
+    this.sessionId = authProvider.sessionId;
   }
 
   final String api = 'https://tt.mogic.com';
@@ -30,78 +29,29 @@ class ApiService {
   */
   void validateResponseStatus(int status, int validStatus) {
     if (status == 401) {
-      throw new AuthException( "401", "Unauthorized" ); 
+      throw new AuthException("401", "Unauthorized");
     }
 
     if (status != validStatus) {
-      throw new ApiException( status.toString(), "API Error" ); 
+      throw new ApiException(status.toString(), "API Error");
     }
   }
 
-  // Returns a list of todos.
-  Future<DataResponse> getTodos(String status, { String url = '' }) async {
-    // Defaults to the first page if no url is set.
-    if ('' == url) {
-      url = "$api?status=$status";
-    }
-
+  // Returns a list of items.
+  Future<ItemsResponse> getItems(String status, {String url = ''}) async {
     final response = await http.get(
-      url,
-      headers: {
-        HttpHeaders.authorizationHeader: 'Bearer $token'
-      },
+      api + '/getData/days/3',
+      headers: {'cookie': sessionId},
     );
 
     validateResponseStatus(response.statusCode, 200);
 
-    Map<String, dynamic> apiResponse = json.decode(response.body);
-    List<dynamic> data = apiResponse['data'];
+    List<dynamic> apiResponse = json.decode(response.body);
+    print(apiResponse[0]);
+    List<dynamic> data = apiResponse;
 
-    List<Data> todos = dataFromJson(json.encode(data));
-    String next = apiResponse['links']['next'];
+    List<Items> items = dataFromJson(json.encode(data));
 
-    return DataResponse(todos, next);
+    return ItemsResponse(items);
   }
-
-  // Toggles the status of a todo.
-  toggleTodoStatus(int id, String status) async {
-    final url = 'https://laravelreact.com/api/v1/todo/$id';
-
-    Map<String, String> body = {
-      'status': status,
-    };
-
-    final response = await http.patch(
-      url,
-      headers: {
-        HttpHeaders.authorizationHeader: 'Bearer $token'
-      },
-      body: body
-    );
-
-    validateResponseStatus(response.statusCode, 200);
-  }
-
-  // Adds a new todo.
-  addTodo(String text) async {
-    Map<String, String> body = {
-      'value': text,
-    };
-
-    final response = await http.post(
-      api,
-      headers: {
-        HttpHeaders.authorizationHeader: 'Bearer $token'
-      },
-      body: body
-    );
-
-    validateResponseStatus(response.statusCode, 201);
-
-    // Returns the id of the newly created item.
-    Map<String, dynamic> apiResponse = json.decode(response.body);
-    int id = apiResponse['id'];
-    return id;
-  }
-
 }

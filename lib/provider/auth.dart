@@ -18,9 +18,8 @@ class AuthProvider with ChangeNotifier {
   final String api = 'https://tt.mogic.com';
 
   initAuthProvider() async {
-    String sessionId = await _getSessionId();
-    if (sessionId != null) {
-      _sessionId = sessionId;
+    await _getSessionId();
+    if (_sessionId != null) {
       _status = Status.Authenticated;
     } else {
       _status = Status.Unauthenticated;
@@ -28,7 +27,6 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //Store
   _getSessionId() async {
     _sessionId = await _storage.read(key: 'sessionId');
   }
