@@ -1,73 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/models/auth.dart';
-import 'package:timetracker_app/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/provider/dashboard.dart';
+import 'package:timetracker_app/views/dashboard.dart';
+import 'package:timetracker_app/views/loading.dart';
+import 'package:timetracker_app/views/login.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Router(),
+          '/login': (context) => LogInScreen()
+        },
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class Router extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+    final authProvider = Provider.of<AuthProvider>(context);
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  Auth session = Auth();
-  int _counter = 0;
-
-  void _incrementCounter() async {
-    var headers = await session.post('https://tt.mogic.com/login',
-        {'username': 'mfrischbutter', 'password': 'aiUVQ6nmiGThUo!g3ZPX'},
-        {});
-    session.get('https://tt.mogic.com/getData/days/3', headers);
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return Consumer<AuthProvider>(
+      builder: (context, user, child) {
+        switch (user.status) {
+          case Status.Uninitialized:
+            return LoadingScreen();
+          case Status.Unauthenticated:
+            return LogInScreen();
+          case Status.Authenticated:
+            return ChangeNotifierProvider(
+              create: (context) => DashboardProvider(authProvider),
+              child: DashboardScreen(),
+            );
+          default:
+            return LogInScreen();
+        }
+      },
     );
   }
 }
