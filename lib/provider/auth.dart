@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +21,8 @@ class AuthProvider with ChangeNotifier {
 
   initAuthProvider() async {
     await _getSessionId();
-    if (_sessionId != null) {
+    bool loginValid = await checkLoginStatus();
+    if (_sessionId != null && loginValid) {
       _status = Status.Authenticated;
     } else {
       _status = Status.Unauthenticated;
@@ -33,6 +36,18 @@ class AuthProvider with ChangeNotifier {
 
   _storeSessionId(String value) async {
     await _storage.write(key: 'sessionId', value: value);
+  }
+
+  Future<bool> checkLoginStatus() async {
+    http.Response response = await http.get(
+      api + '/status/check',
+      headers: {'cookie': _sessionId},
+    );
+    var status = json.decode(response.body);
+    if (status['loginStatus'] == true) {
+      return true;
+    }
+    return false;
   }
 
   Future<bool> login(String username, String password) async {

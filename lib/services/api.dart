@@ -21,34 +21,24 @@ class ApiService {
 
   final String api = 'https://tt.mogic.com';
 
-  /*
-  * Validates the response code from an API call.
-  * A 401 indicates that the token has expired.
-  * A 200 or 201 indicates the API call was successful.
-  */
-  void validateResponseStatus(int status, int validStatus) {
-    if (status == 401) {
+  void validateResponse(http.Response response) {
+    try {
+      json.decode(response.body);
+    } on FormatException {
       throw new AuthException("401", "Unauthorized");
-    }
-
-    if (status != validStatus) {
-      throw new ApiException(status.toString(), "API Error");
     }
   }
 
   // Returns a list of items.
   Future<ItemsResponse> getItems(String status, {String url = ''}) async {
-    print(sessionId);
     final response = await http.get(
       api + '/getData/days/3',
       headers: {'cookie': sessionId},
     );
 
-    validateResponseStatus(response.statusCode, 200);
+    validateResponse(response);
     List<dynamic> apiResponse = json.decode(response.body);
-    print(apiResponse);
     List<Items> items = itemsFromResponse(apiResponse);
-    print(items);
     return ItemsResponse(items);
   }
 }

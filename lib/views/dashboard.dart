@@ -30,35 +30,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   static List<Widget> _navBarWidgets = <Widget>[
     Tracker(),
-    Center(child: Text('coming soon!')),
-    Center(child: Text('coming soon too!'))
+    Center(
+        child: Text(
+      'coming soon!',
+      style: TextStyle(color: Styles.textColor),
+    )),
+    Center(
+        child: Text(
+      'coming soon too!',
+      style: TextStyle(color: Styles.textColor),
+    )),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Styles.backgroundColor,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timer),
+            title: Text('Timetracker'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.multiline_chart),
+            title: Text('Summary'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('Settings'),
+          ),
+        ],
+        currentIndex: _currentIndex,
+        selectedItemColor: Styles.primaryColor,
+        unselectedItemColor: Styles.contrastColor,
         backgroundColor: Styles.backgroundColor,
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Tracker'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.multiline_chart),
-              title: Text('Summary'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ],
-          currentIndex: _currentIndex,
-          selectedItemColor: Styles.primaryColor,
-          unselectedItemColor: Styles.contrastColor,
-          backgroundColor: Styles.backgroundColor,
-          onTap: _onItemTapped,
-        ),
-        body: _navBarWidgets.elementAt(_currentIndex));
+        onTap: _onItemTapped,
+      ),
+      body: _navBarWidgets.elementAt(_currentIndex),
+      floatingActionButton: Visibility(
+          visible: (_currentIndex == 0) ? true : false,
+          child: FloatingActionButton(
+            onPressed: null,
+            backgroundColor: Colors.green,
+            child: Icon(Icons.play_arrow),
+          )),
+    );
   }
 }

@@ -5,6 +5,7 @@ class Styles {
 
   static TextStyle h1 = defaultStyle.copyWith(
     fontWeight: FontWeight.w700,
+    color: textColor,
     fontSize: 18.0,
     height: 22 / 18,
   );
@@ -20,6 +21,7 @@ class Styles {
   );
 
   static Color backgroundColor = Color(0xff14061b);
+  static Color darkBackgroundColor = Color(0xff110517);
   static Color contrastColor = Colors.white;
   static Color primaryColor = Color(0xfff6102f);
   static Color secondaryColor = Color(0xff840823);

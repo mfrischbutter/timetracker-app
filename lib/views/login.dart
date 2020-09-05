@@ -6,15 +6,16 @@ import 'package:timetracker_app/utils/validator.dart';
 import 'package:timetracker_app/widgets/notification_text.dart';
 import 'package:timetracker_app/widgets/styled_flat_button.dart';
 
-
 class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Log In'),
-        leading: Container(),
+        backgroundColor: Styles.backgroundColor,
+        elevation: 0,
       ),
+      backgroundColor: Styles.backgroundColor,
       body: Center(
         child: Container(
           child: Padding(
@@ -44,7 +45,8 @@ class LogInFormState extends State<LogInForm> {
   Future<void> submit() async {
     final form = _formKey.currentState;
     if (form.validate()) {
-      await Provider.of<AuthProvider>(context, listen: false).login(username, password);
+      await Provider.of<AuthProvider>(context, listen: false)
+          .login(username, password);
     }
   }
 
@@ -63,31 +65,41 @@ class LogInFormState extends State<LogInForm> {
           ),
           SizedBox(height: 10.0),
           Consumer<AuthProvider>(
-            builder: (context, provider, child) => provider.notification ?? NotificationText(''),
+            builder: (context, provider, child) =>
+                provider.notification ?? NotificationText(''),
           ),
           SizedBox(height: 30.0),
           TextFormField(
-            autofillHints: [AutofillHints.username, AutofillHints.email],
-            decoration: Styles.input.copyWith(
-              hintText: 'Nutzername',
-            ),
-            validator: (value) {
-              username = value.trim();
-              return Validate.requiredField(value, 'Nutername ist erforderlich.');
-            }
-          ),
+              autofillHints: [
+                AutofillHints.username,
+                AutofillHints.email,
+              ],
+              decoration: Styles.input.copyWith(
+                hintText: 'Nutzername',
+              ),
+              validator: (value) {
+                username = value.trim();
+                return Validate.requiredField(
+                  value,
+                  'Nutername ist erforderlich.',
+                );
+              }),
           SizedBox(height: 15.0),
           TextFormField(
-            obscureText: true,
-            autofillHints: [AutofillHints.password],
-            decoration: Styles.input.copyWith(
-              hintText: 'Passwort',
-            ),
-            validator: (value) {
-              password = value.trim();
-              return Validate.requiredField(value, 'Passwort ist erforderlich.');
-            }
-          ),
+              obscureText: true,
+              autofillHints: [
+                AutofillHints.password,
+              ],
+              decoration: Styles.input.copyWith(
+                hintText: 'Passwort',
+              ),
+              validator: (value) {
+                password = value.trim();
+                return Validate.requiredField(
+                  value,
+                  'Passwort ist erforderlich.',
+                );
+              }),
           SizedBox(height: 15.0),
           StyledFlatButton(
             'Anmelden',

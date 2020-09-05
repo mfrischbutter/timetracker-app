@@ -32,11 +32,14 @@ class _TrackerState extends State<Tracker> {
         enablePullDown: true,
         enablePullUp: false,
         onRefresh: _onRefresh,
-        child: ListView.builder(
-          itemBuilder: (context, i) => TrackerCard(title: items[i].ticket, subtitle: items[i].date),
-          itemExtent: 100.0,
-          itemCount: items.length,
-        ),
+        child:
+          (items.length == 0) ?
+            ListView.builder(
+              itemBuilder: (context, i) => TrackerCard(title: items[i].ticket, subtitle: items[i].date),
+              itemExtent: 100.0,
+              itemCount: items.length,
+            )
+          : Text('you haven\'t tracked for while.'),
       ),
     );
   }
