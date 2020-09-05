@@ -10,6 +10,28 @@ Android
 
 iOS (not tested yet)
 ...
+
+## Status
+
+### Done
+
+- Auth (Login)
+- List recent entries
+
+### Todo (sorted)
+
+- Detail Page for entries
+- Add entries
+- Edit entries
+- Start & Stop timer for entries
+- Better Design
+- Summary
+- Language support
+- Filter / Search
+- Error reporting
+- Bulk entries
+...
+
 ## Developement
 Clone repository
 
