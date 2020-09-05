@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/styles/styles.dart';
+import 'package:timetracker_app/views/tracker.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key}) : super(key: key);
@@ -11,39 +10,55 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  int _currentIndex = 0;
 
-  void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    Provider.of<ItemsProvider>(context, listen: false).getItems();
-    _refreshController.refreshCompleted();
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    var items = Provider.of<ItemsProvider>(context).items;
+  void dispose() {
+    super.dispose();
+  }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  static List<Widget> _navBarWidgets = <Widget>[
+    Tracker(),
+    Center(child: Text('coming soon!')),
+    Center(child: Text('coming soon too!'))
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: SmartRefresher(
-        controller: _refreshController,
-        header: WaterDropHeader(),
-        enablePullDown: true,
-        enablePullUp: false,
-        onRefresh: _onRefresh,
-        child: ListView.builder(
-          itemBuilder: (context, i) => Card(
-            child: Column(
-              children: [
-                Text('items[i].id.toString()'),
-              ],
+        backgroundColor: Styles.backgroundColor,
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Tracker'),
             ),
-          ),
-          itemExtent: 100.0,
-          itemCount: items.length,
+            BottomNavigationBarItem(
+              icon: Icon(Icons.multiline_chart),
+              title: Text('Summary'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+          ],
+          currentIndex: _currentIndex,
+          selectedItemColor: Styles.primaryColor,
+          unselectedItemColor: Styles.contrastColor,
+          backgroundColor: Styles.backgroundColor,
+          onTap: _onItemTapped,
         ),
-      ),
-    ));
+        body: _navBarWidgets.elementAt(_currentIndex));
   }
 }

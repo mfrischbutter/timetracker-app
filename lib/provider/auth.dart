@@ -47,7 +47,7 @@ class AuthProvider with ChangeNotifier {
     http.Response response = await http.post(api + '/login', body: body);
 
     if (response.statusCode == 302) {
-      _storeSessionId(response.headers['set-cookie']);
+      await _storeSessionId(response.headers['set-cookie']);
 
       _status = Status.Authenticated;
       notifyListeners();

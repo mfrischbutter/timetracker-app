@@ -67,6 +67,7 @@ class LogInFormState extends State<LogInForm> {
           ),
           SizedBox(height: 30.0),
           TextFormField(
+            autofillHints: [AutofillHints.username, AutofillHints.email],
             decoration: Styles.input.copyWith(
               hintText: 'Nutzername',
             ),
@@ -78,6 +79,7 @@ class LogInFormState extends State<LogInForm> {
           SizedBox(height: 15.0),
           TextFormField(
             obscureText: true,
+            autofillHints: [AutofillHints.password],
             decoration: Styles.input.copyWith(
               hintText: 'Passwort',
             ),

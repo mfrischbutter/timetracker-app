@@ -38,6 +38,7 @@ class ApiService {
 
   // Returns a list of items.
   Future<ItemsResponse> getItems(String status, {String url = ''}) async {
+    print(sessionId);
     final response = await http.get(
       api + '/getData/days/3',
       headers: {'cookie': sessionId},

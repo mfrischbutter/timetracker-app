@@ -34,6 +34,7 @@ dependencies:
   firebase_auth: ^0.18.0+1
   flutter_secure_storage: ^3.3.3
   pull_to_refresh: ^1.6.1
+  bottom_navy_bar: ^  5.5.0
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
 import 'package:timetracker_app/views/loading.dart';
 import 'package:timetracker_app/views/login.dart';
