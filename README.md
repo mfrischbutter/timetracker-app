@@ -1,16 +1,26 @@
-# timetracker_app
 
-A new Flutter project.
+# Timetracker App
 
-## Getting Started
+The app version of the Mogic time tracker.
 
-This project is a starting point for a Flutter application.
+## How to install
+Android
 
-A few resources to get you started if this is your first Flutter project:
+    flutter build apk --release
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+iOS (not tested yet)
+...
+## Developement
+Clone repository
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    git clone git@github.com:mfrischbutter/timetracker-app.git
+    cd ./timetracker-app
+
+Install all flutter packages
+
+    flutter pub get
+
+Run app on connected device or emulator
+
+    flutter run
+
