@@ -9,7 +9,6 @@ Android
     flutter build apk --release
 
 iOS (not tested yet)
-...
 
 ## Status
 
@@ -30,7 +29,6 @@ iOS (not tested yet)
 - Filter / Search
 - Error reporting
 - Bulk entries
-...
 
 ## Developement
 Clone repository
