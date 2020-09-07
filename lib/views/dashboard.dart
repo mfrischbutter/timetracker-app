@@ -33,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Tracker(),
     Center(
         child: Text(
-      'coming soon!',
+      'wip',
       style: TextStyle(color: Styles.textColor),
     )),
     SettingsScreen(),

@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/models/items.dart';
+import 'package:timetracker_app/models/customers.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/services/api.dart';
+import 'package:timetracker_app/utils/customers_response.dart';
 import 'package:timetracker_app/utils/exceptions.dart';
-import 'package:timetracker_app/utils/items_response.dart';
 
-class ItemsProvider with ChangeNotifier {
+class CustomersProvider with ChangeNotifier {
   bool _initialized = false;
 
   ApiService apiService;
   AuthProvider authProvider;
 
-  List<Items> _items = List<Items>();
+  List<Customers> _customers = List<Customers>();
 
   bool get initialized => _initialized;
-  List<Items> get items => _items;
+  List<Customers> get customers => _customers;
 
-  ItemsProvider(AuthProvider authProvider) {
+  CustomersProvider(AuthProvider authProvider) {
     this.apiService = ApiService(authProvider);
     this.authProvider = authProvider;
 
-    getItems();
+    getCustomers();
   }
 
-  void getItems() async {
+  void getCustomers() async {
     try {
-      ItemsResponse getItemsResponse = await apiService.getItems();
+      CustomersResponse getCustomersResponse = await apiService.getCustomers();
 
       _initialized = true;
-      _items = getItemsResponse.items;
+      _customers = getCustomersResponse.customers;
 
       notifyListeners();
     } on AuthException {

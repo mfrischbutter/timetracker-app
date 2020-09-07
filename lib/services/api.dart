@@ -1,11 +1,15 @@
 import 'package:http/http.dart' as http;
+import 'package:timetracker_app/models/customers.dart';
 import 'package:timetracker_app/models/items.dart';
+import 'package:timetracker_app/models/projects.dart';
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/utils/customers_response.dart';
 import 'package:timetracker_app/utils/items_response.dart';
 import 'package:timetracker_app/utils/exceptions.dart';
+import 'package:timetracker_app/utils/projects_response.dart';
 
 class ApiService {
   AuthProvider authProvider;
@@ -30,9 +34,9 @@ class ApiService {
   }
 
   // Returns a list of items.
-  Future<ItemsResponse> getItems(String status, {String url = ''}) async {
+  Future<ItemsResponse> getItems() async {
     final response = await http.get(
-      api + '/getData/days/3',
+      api + '/getData/days/7',
       headers: {
         'cookie': sessionId,
       },
@@ -42,5 +46,33 @@ class ApiService {
     List<dynamic> apiResponse = json.decode(response.body);
     List<Items> items = itemsFromResponse(apiResponse);
     return ItemsResponse(items);
+  }
+
+  Future<CustomersResponse> getCustomers() async {
+    final response = await http.get(
+      api + '/getAllCustomers',
+      headers: {
+        'cookie': sessionId,
+      },
+    );
+
+    validateResponse(response);
+    List<dynamic> apiResponse = json.decode(response.body);
+    List<Customers> customers = customersFromResponse(apiResponse);
+    return CustomersResponse(customers);
+  }
+
+  Future<ProjectsResponse> getProjects() async {
+    final response = await http.get(
+      api + '/getAllProjects',
+      headers: {
+        'cookie': sessionId,
+      },
+    );
+
+    validateResponse(response);
+    List<dynamic> apiResponse = json.decode(response.body);
+    List<Projects> projects = projectsFromResponse(apiResponse);
+    return ProjectsResponse(projects);
   }
 }

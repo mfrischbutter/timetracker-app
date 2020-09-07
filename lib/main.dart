@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/items.dart';
-import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
 import 'package:timetracker_app/views/loading.dart';
 import 'package:timetracker_app/views/login.dart';
@@ -35,8 +36,15 @@ class Router extends StatelessWidget {
           case Status.Unauthenticated:
             return LogInScreen();
           case Status.Authenticated:
-            return ChangeNotifierProvider(
-              create: (context) => ItemsProvider(authProvider),
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider<ItemsProvider>(
+                  create: (_) => ItemsProvider(authProvider),
+                ),
+                ChangeNotifierProvider<CustomersProvider>(
+                  create: (_) => CustomersProvider(authProvider),
+                ),
+              ],
               child: DashboardScreen(),
             );
           default:

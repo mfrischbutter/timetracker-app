@@ -1,4 +1,4 @@
-List<Projects> itemsFromResponse(List<dynamic> items) =>
+List<Projects> projectsFromResponse(List<dynamic> items) =>
     new List<Projects>.from(items.map((x) => Projects.fromJson(x)));
 
 class Projects {
@@ -30,6 +30,7 @@ class Projects {
         jiraId: json['project']['jiraId'],
         ticketSystem: json['project']['ticket_system'],
         customer: json['project']['customer'],
+        active: json['project']['active'],
         global: json['project']['global'],
         estimation: json['project']['estimation'],
         estimationText: json['project']['estimationText'],

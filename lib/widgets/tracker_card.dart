@@ -8,32 +8,37 @@ class TrackerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Styles.darkBackgroundColor,
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 10.0,
-        ),
-        title: Text(
-          title,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Styles.lightBackgroundColor,
+          border: Border.symmetric(
+            vertical: BorderSide(color: Color(0xff372D3D)),
           ),
         ),
-        subtitle: Text(
-          subtitle,
-          style: TextStyle(
-            color: Colors.white,
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 10.0,
           ),
-        ),
-        trailing: Icon(
-          Icons.keyboard_arrow_right,
-          color: Colors.white,
-          size: 30.0,
+          title: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Text(
+            subtitle,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.white,
+            size: 30.0,
+          ),
         ),
       ),
     );
