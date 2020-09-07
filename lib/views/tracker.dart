@@ -126,7 +126,9 @@ class _TrackerState extends State<Tracker> {
                 },
                 itemCount: items.length,
               )
-            : Text('you haven\'t tracked for while.'),
+            : Center(
+                child: Text('you haven\'t tracked for while.'),
+              ),
       ),
     );
   }

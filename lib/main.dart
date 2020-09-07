@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
+import 'package:timetracker_app/views/detail_tracker.dart';
 import 'package:timetracker_app/views/loading.dart';
 import 'package:timetracker_app/views/login.dart';
 
@@ -14,9 +16,14 @@ void main() {
       create: (context) => AuthProvider(),
       child: MaterialApp(
         initialRoute: '/',
+        theme: ThemeData(
+          primaryColor: Styles.primaryColor,
+          accentColor: Styles.backgroundColor,
+        ),
         routes: {
           '/': (context) => Router(),
-          '/login': (context) => LogInScreen()
+          '/login': (context) => LogInScreen(),
+          '/details': (context) => DetailTrackerScreen(),
         },
       ),
     ),

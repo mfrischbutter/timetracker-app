@@ -1,5 +1,3 @@
-import 'package:timetracker_app/models/customers.dart';
-
 List<Items> itemsFromResponse(List<dynamic> items) =>
     new List<Items>.from(items.map((x) => Items.fromJson(x)));
 

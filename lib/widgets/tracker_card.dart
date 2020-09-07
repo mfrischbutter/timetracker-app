@@ -9,6 +9,7 @@ class TrackerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () => Navigator.pushNamed(context, '/details'),
       child: Container(
         decoration: BoxDecoration(
           color: Styles.lightBackgroundColor,
