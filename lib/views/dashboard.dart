@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/styles/styles.dart';
+import 'package:timetracker_app/views/settings.dart';
 import 'package:timetracker_app/views/tracker.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -35,11 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       'coming soon!',
       style: TextStyle(color: Styles.textColor),
     )),
-    Center(
-        child: Text(
-      'coming soon too!',
-      style: TextStyle(color: Styles.textColor),
-    )),
+    SettingsScreen(),
   ];
 
   @override
@@ -69,12 +66,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: _navBarWidgets.elementAt(_currentIndex),
       floatingActionButton: Visibility(
-          visible: (_currentIndex == 0) ? true : false,
-          child: FloatingActionButton(
-            onPressed: null,
-            backgroundColor: Colors.green,
-            child: Icon(Icons.play_arrow),
-          )),
+        visible: (_currentIndex == 0) ? true : false,
+        child: FloatingActionButton(
+          onPressed: null,
+          backgroundColor: Colors.green,
+          child: Icon(Icons.play_arrow),
+        ),
+      ),
     );
   }
 }

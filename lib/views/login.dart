@@ -14,6 +14,7 @@ class LogInScreen extends StatelessWidget {
         title: Text('Log In'),
         backgroundColor: Styles.backgroundColor,
         elevation: 0,
+        centerTitle: true,
       ),
       backgroundColor: Styles.backgroundColor,
       body: Center(

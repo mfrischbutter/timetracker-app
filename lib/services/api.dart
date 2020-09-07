@@ -33,7 +33,9 @@ class ApiService {
   Future<ItemsResponse> getItems(String status, {String url = ''}) async {
     final response = await http.get(
       api + '/getData/days/3',
-      headers: {'cookie': sessionId},
+      headers: {
+        'cookie': sessionId,
+      },
     );
 
     validateResponse(response);

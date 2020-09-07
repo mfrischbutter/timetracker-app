@@ -18,6 +18,7 @@ class LoadingScreen extends StatelessWidget {
         title: Text('Timetracker App'),
         backgroundColor: Styles.backgroundColor,
         elevation: 0,
+        centerTitle: true,
       ),
       backgroundColor: Styles.backgroundColor,
       body: Center(

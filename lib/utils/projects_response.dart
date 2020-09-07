@@ -1,5 +1,6 @@
+import 'package:timetracker_app/models/projects.dart';
 
 class ProjectsResponse {
-  final  List<P> projects;
+  final List<Projects> projects;
   ProjectsResponse(this.projects);
 }

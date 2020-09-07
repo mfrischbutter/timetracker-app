@@ -35,6 +35,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   _storeSessionId(String value) async {
+    _sessionId = value;
     await _storage.write(key: 'sessionId', value: value);
   }
 
