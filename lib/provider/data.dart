@@ -57,6 +57,17 @@ class DataProvider with ChangeNotifier {
     }
   }
 
+  void postItem(BuildContext context, Items item) async {
+    try {
+      await apiService.saveItem(context, item);
+    } on AuthException {
+      // API returned a AuthException, so user is logged out.
+      await authProvider.logOut(true);
+    } catch (Exception) {
+      print(Exception);
+    }
+  }
+
   void selectItem(int id) {
     _selectedItem = _items.firstWhere((element) => element.id == id);
   }

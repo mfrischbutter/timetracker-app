@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/models/activities.dart';
 import 'package:timetracker_app/models/customers.dart';
@@ -40,17 +39,6 @@ class DetailTrackerScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Styles.backgroundColor,
           elevation: 10,
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 20.0, top: 17),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Fertig',
-                    style: TextStyle(color: Colors.green, fontSize: 18),
-                  ),
-                )),
-          ],
           centerTitle: true,
         ),
         backgroundColor: Styles.backgroundColor,
@@ -89,7 +77,13 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
     currentItem = widget.item;
   }
 
-  void submit() {}
+  void submit() {
+    // Provider.of<DataProvider>(
+    //   context,
+    //   listen: false,
+    // ).postItem(context, currentItem);
+    Navigator.pop(context);
+  }
 
   void _showDatePicker(context) async {
     DateTime _today = DateTime.now();
@@ -173,12 +167,12 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: StyledFlatButton(
-            'Löschen',
+            'Speichern',
             filled: false,
-            color: Colors.red,
-            splashColor: Colors.red[400],
+            color: Colors.green,
+            splashColor: Colors.green[400],
             onPressed: () {
-              print('delete');
+              submit();
             },
           ),
         ),

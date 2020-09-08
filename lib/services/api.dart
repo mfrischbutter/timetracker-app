@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:timetracker_app/models/activities.dart';
 import 'package:timetracker_app/models/customers.dart';
@@ -50,25 +51,31 @@ class ApiService {
     return ItemsResponse(items);
   }
 
-  void saveItem(Items item) async {
+  Future<void> saveItem(BuildContext context, Items item) async {
+    var body = {
+      'date': item.dateStringForApi,
+      'start': item.startString(context),
+      'end': item.endString(context),
+      'user': item.user.toString(),
+      'customer': item.customer.toString(),
+      'project': item.project.toString(),
+      'activity': item.activity.toString(),
+      'description': item.description,
+      'ticket': item.ticket,
+      'duration': item.durationString(),
+      'class': item.itemClass.toString(),
+    };
+
+    if (item.id != 0) {
+      body.addEntries([MapEntry('id', item.id.toString())]);
+    }
+
     final response = await http.post(
       api + '/tracking/save',
       headers: {
         'cookie': sessionId,
       },
-      body: {
-        'date': item.date,
-        'start': item.date,
-        'end': item.date,
-        'user': item.date,
-        'customer': item.date,
-        'project': item.date,
-        'activity': item.date,
-        'description': item.date,
-        'ticket': item.date,
-        'duration': item.date,
-        'class': item.date,
-      },
+      body: body,
     );
 
     validateResponse(response);
