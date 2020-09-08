@@ -15,7 +15,7 @@ class Activities {
   });
 
   factory Activities.fromJson(Map<String, dynamic> json) => new Activities(
-        id: int.parse(json['activity']['id']),
+        id: json['activity']['id'],
         name: json['activity']['name'],
         needsTicket: json['activity']['needsTicket'],
         factor: json['activity']['factor'],

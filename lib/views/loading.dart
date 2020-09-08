@@ -5,13 +5,13 @@ import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/styles/styles.dart';
 
 class LoadingScreen extends StatelessWidget {
-  initAuthProvider(context) async {
+  initProvider(context) async {
     Provider.of<AuthProvider>(context).initAuthProvider();
   }
 
   @override
   Widget build(BuildContext context) {
-    initAuthProvider(context);
+    initProvider(context);
 
     return Scaffold(
       appBar: AppBar(

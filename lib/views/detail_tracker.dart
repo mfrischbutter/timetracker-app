@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:timetracker_app/models/activities.dart';
+import 'package:timetracker_app/models/customers.dart';
 import 'package:timetracker_app/models/items.dart';
 import 'package:timetracker_app/models/projects.dart';
 import 'package:timetracker_app/provider/data.dart';
@@ -8,30 +11,54 @@ import 'package:timetracker_app/widgets/styled_flat_button.dart';
 import 'package:timetracker_app/widgets/tracker_entry.dart';
 
 class DetailTrackerScreen extends StatelessWidget {
-  const DetailTrackerScreen({Key key}) : super(key: key);
+  final bool isEdit;
+  const DetailTrackerScreen({Key key, @required this.isEdit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Items item = Provider.of<DataProvider>(
-      context,
-      listen: false,
-    ).selectedItem;
+    Items currentItem = Items();
+    if (isEdit) {
+      currentItem = Provider.of<DataProvider>(
+        context,
+        listen: false,
+      ).selectedItem;
+    }
     List<Projects> projects = Provider.of<DataProvider>(
       context,
       listen: false,
     ).projects;
+    List<Activities> activities = Provider.of<DataProvider>(
+      context,
+      listen: false,
+    ).activities;
+    List<Customers> customers = Provider.of<DataProvider>(
+      context,
+      listen: false,
+    ).customers;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Eintrag bearbeiten'),
           backgroundColor: Styles.backgroundColor,
-          elevation: 0,
+          elevation: 10,
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 20.0, top: 17),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'Fertig',
+                    style: TextStyle(color: Colors.green, fontSize: 18),
+                  ),
+                )),
+          ],
           centerTitle: true,
         ),
         backgroundColor: Styles.backgroundColor,
         body: DetailTrackerForm(
-          item: item,
+          item: currentItem,
           projects: projects,
+          activities: activities,
+          customers: customers,
         ));
   }
 }
@@ -39,14 +66,58 @@ class DetailTrackerScreen extends StatelessWidget {
 class DetailTrackerForm extends StatefulWidget {
   final Items item;
   final List<Projects> projects;
-  DetailTrackerForm({Key key, this.item, this.projects}) : super(key: key);
+  final List<Activities> activities;
+  final List<Customers> customers;
+  DetailTrackerForm({
+    Key key,
+    this.item,
+    this.projects,
+    this.activities,
+    this.customers,
+  }) : super(key: key);
 
   @override
   _DetailTrackerFormState createState() => _DetailTrackerFormState();
 }
 
 class _DetailTrackerFormState extends State<DetailTrackerForm> {
+  Items currentItem = Items();
+
+  @override
+  void initState() {
+    super.initState();
+    currentItem = widget.item;
+  }
+
   void submit() {}
+
+  void _showDatePicker(context) async {
+    DateTime _today = DateTime.now();
+    DateTime _selectedDate = await showDatePicker(
+      context: context,
+      initialDate: currentItem.date,
+      lastDate: _today,
+      firstDate: DateTime(_today.year - 1, _today.month, _today.day),
+    );
+    setState(() {
+      currentItem.date = _selectedDate;
+    });
+  }
+
+  void _showTimePicker(context, isStartTime) async {
+    TimeOfDay _now = TimeOfDay.now();
+    TimeOfDay _selectedTime = await showTimePicker(
+      context: context,
+      initialTime: _now,
+    );
+    setState(() {
+      if (isStartTime) {
+        currentItem.start = _selectedTime;
+      } else {
+        currentItem.end = _selectedTime;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +127,14 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
         TrackerEntry(
           icon: Icons.date_range,
           title: 'Datum',
-          content: widget.item.date.replaceAll('/', '.'),
+          content: currentItem.dateString,
+          onTap: () => _showDatePicker(context),
         ),
         TrackerEntryTime(
-          start: widget.item.start,
-          end: widget.item.end,
+          start: currentItem.startString(context),
+          end: currentItem.endString(context),
+          onTapStart: () => _showTimePicker(context, true),
+          onTapEnd: () => _showTimePicker(context, false),
         ),
         TrackerEntry(
           icon: Icons.label,
@@ -70,7 +144,9 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
         TrackerEntry(
           icon: Icons.person,
           title: 'Kunde',
-          content: 'null',
+          content: widget.customers
+              .firstWhere((element) => element.id == widget.item.customer)
+              .name,
         ),
         TrackerEntry(
           icon: Icons.toys,
@@ -82,7 +158,9 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
         TrackerEntry(
           icon: Icons.directions_run,
           title: 'Tätigkeit',
-          content: 'null',
+          content: widget.activities
+              .firstWhere((element) => element.id == widget.item.activity)
+              .name,
         ),
         TrackerEntry(
           icon: Icons.description,

@@ -22,7 +22,7 @@ class StyledFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      color: (filled) ? color ?? Colors.blue[500] : null,
+      color: (filled != null && filled) ? color ?? Colors.blue[500] : null,
       splashColor: splashColor ?? Colors.blue[200],
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.0),

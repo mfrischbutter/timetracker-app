@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:timetracker_app/models/items.dart';
@@ -27,7 +26,6 @@ class _TrackerState extends State<Tracker> {
   List dateStringSplited;
   DateTime time = DateTime.utc(2000);
   Widget column;
-  DateFormat formatter = DateFormat('dd.MM.yyyy');
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
@@ -55,17 +53,11 @@ class _TrackerState extends State<Tracker> {
         enablePullDown: true,
         enablePullUp: false,
         onRefresh: _onRefresh,
-        child: (items.length > 0)
+        child: (items.length > 0 && projects.length > 0)
             ? ListView.builder(
                 itemBuilder: (context, i) {
-                  dateStringSplited = items[i].date.split('/');
-                  currentDate = DateTime(
-                    int.parse(dateStringSplited[2]),
-                    int.parse(dateStringSplited[1]),
-                    int.parse(dateStringSplited[0]),
-                  );
-
-                  itemDateString = formatter.format(currentDate);
+                  itemDateString = items[i].dateString;
+                  currentDate = items[i].date;
 
                   difference = currentDate.difference(DateTime.now());
                   if (difference.inDays == 0) {
@@ -76,21 +68,12 @@ class _TrackerState extends State<Tracker> {
                   if (lastItemDateString == null ||
                       lastItemDateString != itemDateString) {
                     time = items
-                        .where((element) => element.date == items[i].date)
+                        .where((element) =>
+                            element.dateString == items[i].dateString)
                         .fold(
                       DateTime.utc(2000, 1, 1, 0, 0),
                       (DateTime previous, element) {
-                        var durations = element.duration.split(':');
-                        return previous.add(
-                          Duration(
-                            hours: int.parse(
-                              durations[0],
-                            ),
-                            minutes: int.parse(
-                              durations[1],
-                            ),
-                          ),
-                        );
+                        return previous.add(element.duration);
                       },
                     );
                   }
@@ -100,9 +83,9 @@ class _TrackerState extends State<Tracker> {
                               lastItemDateString != itemDateString)
                           ? TrackerCardDate(
                               title: itemDateString,
-                              time: time.hour.toString() +
+                              time: time.hour.toString().padLeft(2, '0') +
                                   ':' +
-                                  time.minute.toString() +
+                                  time.minute.toString().padLeft(2, '0') +
                                   'h',
                             )
                           : Container(),
@@ -112,11 +95,11 @@ class _TrackerState extends State<Tracker> {
                             .firstWhere(
                                 (element) => element.id == items[i].project)
                             .name,
-                        subtitle: items[i].start +
+                        subtitle: items[i].startString(context) +
                             ' - ' +
-                            items[i].end +
+                            items[i].endString(context) +
                             ' / ' +
-                            items[i].duration +
+                            items[i].durationString() +
                             'h',
                       ),
                     ],

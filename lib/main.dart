@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/provider/data.dart';
+import 'package:timetracker_app/provider/timer.dart';
 import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
 import 'package:timetracker_app/views/detail_tracker.dart';
@@ -12,10 +13,19 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
-      child: ChangeNotifierProvider(
-        create: (_) => DataProvider(
-          Provider.of<AuthProvider>(_, listen: false),
-        ),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => DataProvider(
+              Provider.of<AuthProvider>(_, listen: false),
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => TimerProvider(
+              Provider.of<AuthProvider>(_, listen: false),
+            ),
+          )
+        ],
         child: MaterialApp(
           initialRoute: '/',
           theme: ThemeData(
@@ -25,7 +35,9 @@ void main() {
           routes: {
             '/': (context) => Router(),
             '/login': (context) => LogInScreen(),
-            '/details': (context) => DetailTrackerScreen(),
+            '/details': (context) => DetailTrackerScreen(
+                  isEdit: true,
+                ),
           },
         ),
       ),

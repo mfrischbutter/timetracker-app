@@ -19,6 +19,7 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   pull_to_refresh: ^1.6.1
   intl: ^0.16.1
+  shared_preferences: ">=0.5.0 <2.0.0"
 
 flutter:
   uses-material-design: true

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:timetracker_app/provider/timer.dart';
 import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/settings.dart';
 import 'package:timetracker_app/views/tracker.dart';
@@ -41,6 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void _startOrStop() {
+      Provider.of<TimerProvider>(context, listen: false).startOrPause();
+    }
+
     return Scaffold(
       backgroundColor: Styles.backgroundColor,
       bottomNavigationBar: BottomNavigationBar(
@@ -68,9 +74,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButton: Visibility(
         visible: (_currentIndex == 0) ? true : false,
         child: FloatingActionButton(
-          onPressed: null,
+          onPressed: _startOrStop,
           backgroundColor: Colors.green,
-          child: Icon(Icons.play_arrow),
+          child: Consumer<TimerProvider>(builder: (
+            context,
+            timer,
+            child,
+          ) {
+            switch (timer.status) {
+              case (TimerStatus.Running):
+                return Icon(Icons.stop);
+                break;
+              default:
+                return Icon(Icons.play_arrow);
+            }
+          }),
         ),
       ),
     );
