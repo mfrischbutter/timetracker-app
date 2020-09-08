@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/models/items.dart';
 import 'package:timetracker_app/models/projects.dart';
-import 'package:timetracker_app/provider/items.dart';
-import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/provider/data.dart';
 import 'package:timetracker_app/styles/styles.dart';
+import 'package:timetracker_app/widgets/styled_flat_button.dart';
+import 'package:timetracker_app/widgets/tracker_entry.dart';
 
 class DetailTrackerScreen extends StatelessWidget {
   const DetailTrackerScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Items item = Provider.of<ItemsProvider>(
+    Items item = Provider.of<DataProvider>(
       context,
       listen: false,
     ).selectedItem;
-    List<Projects> projects = Provider.of<ProjectsProvider>(
+    List<Projects> projects = Provider.of<DataProvider>(
       context,
       listen: false,
     ).projects;
@@ -45,144 +46,65 @@ class DetailTrackerForm extends StatefulWidget {
 }
 
 class _DetailTrackerFormState extends State<DetailTrackerForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   void submit() {}
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            onTap: () {},
-            leading: Icon(
-              Icons.date_range,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Datum',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              widget.item.date.replaceAll('/', '.'),
-              style: TextStyle(color: Colors.white),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TrackerEntry(
+          icon: Icons.date_range,
+          title: 'Datum',
+          content: widget.item.date.replaceAll('/', '.'),
+        ),
+        TrackerEntryTime(
+          start: widget.item.start,
+          end: widget.item.end,
+        ),
+        TrackerEntry(
+          icon: Icons.label,
+          title: 'Jira Ticket',
+          content: widget.item.ticket,
+        ),
+        TrackerEntry(
+          icon: Icons.person,
+          title: 'Kunde',
+          content: 'null',
+        ),
+        TrackerEntry(
+          icon: Icons.toys,
+          title: 'Projekt',
+          content: widget.projects
+              .firstWhere((element) => element.id == widget.item.project)
+              .name,
+        ),
+        TrackerEntry(
+          icon: Icons.directions_run,
+          title: 'Tätigkeit',
+          content: 'null',
+        ),
+        TrackerEntry(
+          icon: Icons.description,
+          title: 'Beschreibung',
+          content: widget.item.description,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: StyledFlatButton(
+            'Löschen',
+            filled: false,
+            color: Colors.red,
+            splashColor: Colors.red[400],
+            onPressed: () {
+              print('delete');
+            },
           ),
-          ListTile(
-            leading: Icon(
-              Icons.timer,
-              color: Colors.white,
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Column(
-                    children: [
-                      Text(
-                        'Start',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Text(
-                        widget.item.start,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'Ende',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      widget.item.end,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.label,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Jira Ticket',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              widget.item.ticket,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Kunde',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              'null',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.toys,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Projekt',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              widget.projects
-                  .firstWhere((element) => element.id == widget.item.project)
-                  .name,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.directions_run,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Taetigkeit',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              'null',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.description,
-              color: Colors.white,
-            ),
-            title: Text(
-              'Beschreibung',
-              style: TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              widget.item.description,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

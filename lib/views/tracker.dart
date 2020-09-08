@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:timetracker_app/models/customers.dart';
 import 'package:timetracker_app/models/items.dart';
 import 'package:timetracker_app/models/projects.dart';
-import 'package:timetracker_app/provider/customers.dart';
-import 'package:timetracker_app/provider/items.dart';
-import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/provider/data.dart';
 import 'package:timetracker_app/widgets/tracker_card.dart';
 import 'package:timetracker_app/widgets/tracker_card_date.dart';
 
@@ -34,7 +31,7 @@ class _TrackerState extends State<Tracker> {
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    Provider.of<ItemsProvider>(
+    Provider.of<DataProvider>(
       context,
       listen: false,
     ).getItems();
@@ -43,10 +40,10 @@ class _TrackerState extends State<Tracker> {
 
   @override
   Widget build(BuildContext context) {
-    List<Items> items = Provider.of<ItemsProvider>(
+    List<Items> items = Provider.of<DataProvider>(
       context,
     ).items;
-    List<Projects> projects = Provider.of<ProjectsProvider>(
+    List<Projects> projects = Provider.of<DataProvider>(
       context,
       listen: false,
     ).projects;

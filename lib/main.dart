@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
-import 'package:timetracker_app/provider/customers.dart';
-import 'package:timetracker_app/provider/items.dart';
-import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/provider/data.dart';
 import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
 import 'package:timetracker_app/views/detail_tracker.dart';
@@ -15,24 +12,10 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<ItemsProvider>(
-            create: (_) => ItemsProvider(
-              Provider.of<AuthProvider>(_, listen: false),
-            ),
-          ),
-          ChangeNotifierProvider<CustomersProvider>(
-            create: (_) => CustomersProvider(
-              Provider.of<AuthProvider>(_, listen: false),
-            ),
-          ),
-          ChangeNotifierProvider<ProjectsProvider>(
-            create: (_) => ProjectsProvider(
-              Provider.of<AuthProvider>(_, listen: false),
-            ),
-          ),
-        ],
+      child: ChangeNotifierProvider(
+        create: (_) => DataProvider(
+          Provider.of<AuthProvider>(_, listen: false),
+        ),
         child: MaterialApp(
           initialRoute: '/',
           theme: ThemeData(

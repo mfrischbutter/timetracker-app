@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/provider/data.dart';
 import 'package:timetracker_app/styles/styles.dart';
 
 class TrackerCard extends StatelessWidget {
@@ -13,7 +13,7 @@ class TrackerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Provider.of<ItemsProvider>(
+        Provider.of<DataProvider>(
           context,
           listen: false,
         ).selectItem(id);

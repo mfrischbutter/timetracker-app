@@ -5,15 +5,25 @@ class StyledFlatButton extends StatelessWidget {
   final String text;
   final onPressed;
   final double radius;
+  final Color color;
+  final bool filled;
+  final Color splashColor;
 
-  const StyledFlatButton(this.text, {this.onPressed, Key key, this.radius})
-      : super(key: key);
+  const StyledFlatButton(
+    this.text, {
+    this.onPressed,
+    Key key,
+    this.radius,
+    this.color,
+    this.splashColor,
+    this.filled,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      color: Colors.blue[500],
-      splashColor: Colors.blue[200],
+      color: (filled) ? color ?? Colors.blue[500] : null,
+      splashColor: splashColor ?? Colors.blue[200],
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.0),
         child: Text(
@@ -31,8 +41,8 @@ class StyledFlatButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius ?? 4.0),
         side: BorderSide(
-          color: Colors.blue[500],
-          width: 2,
+          color: color ?? Colors.blue[500],
+          width: 1,
         ),
       ),
     );
