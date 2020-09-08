@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/styles/styles.dart';
 import 'package:timetracker_app/views/dashboard.dart';
 import 'package:timetracker_app/views/detail_tracker.dart';
@@ -14,17 +15,36 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
-      child: MaterialApp(
-        initialRoute: '/',
-        theme: ThemeData(
-          primaryColor: Styles.primaryColor,
-          accentColor: Styles.backgroundColor,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ItemsProvider>(
+            create: (_) => ItemsProvider(
+              Provider.of<AuthProvider>(_, listen: false),
+            ),
+          ),
+          ChangeNotifierProvider<CustomersProvider>(
+            create: (_) => CustomersProvider(
+              Provider.of<AuthProvider>(_, listen: false),
+            ),
+          ),
+          ChangeNotifierProvider<ProjectsProvider>(
+            create: (_) => ProjectsProvider(
+              Provider.of<AuthProvider>(_, listen: false),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          initialRoute: '/',
+          theme: ThemeData(
+            primaryColor: Styles.primaryColor,
+            accentColor: Styles.primaryColor,
+          ),
+          routes: {
+            '/': (context) => Router(),
+            '/login': (context) => LogInScreen(),
+            '/details': (context) => DetailTrackerScreen(),
+          },
         ),
-        routes: {
-          '/': (context) => Router(),
-          '/login': (context) => LogInScreen(),
-          '/details': (context) => DetailTrackerScreen(),
-        },
       ),
     ),
   );
@@ -33,8 +53,6 @@ void main() {
 class Router extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-
     return Consumer<AuthProvider>(
       builder: (context, user, child) {
         switch (user.status) {
@@ -43,17 +61,7 @@ class Router extends StatelessWidget {
           case Status.Unauthenticated:
             return LogInScreen();
           case Status.Authenticated:
-            return MultiProvider(
-              providers: [
-                ChangeNotifierProvider<ItemsProvider>(
-                  create: (_) => ItemsProvider(authProvider),
-                ),
-                ChangeNotifierProvider<CustomersProvider>(
-                  create: (_) => CustomersProvider(authProvider),
-                ),
-              ],
-              child: DashboardScreen(),
-            );
+            return DashboardScreen();
           default:
             return LogInScreen();
         }

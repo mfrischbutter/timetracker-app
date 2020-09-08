@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:timetracker_app/models/customers.dart';
 import 'package:timetracker_app/models/items.dart';
+import 'package:timetracker_app/models/projects.dart';
 import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/items.dart';
+import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/widgets/tracker_card.dart';
 import 'package:timetracker_app/widgets/tracker_card_date.dart';
 
@@ -44,10 +46,10 @@ class _TrackerState extends State<Tracker> {
     List<Items> items = Provider.of<ItemsProvider>(
       context,
     ).items;
-    List<Customers> customers = Provider.of<CustomersProvider>(
+    List<Projects> projects = Provider.of<ProjectsProvider>(
       context,
       listen: false,
-    ).customers;
+    ).projects;
 
     return SafeArea(
       child: SmartRefresher(
@@ -108,9 +110,10 @@ class _TrackerState extends State<Tracker> {
                             )
                           : Container(),
                       TrackerCard(
-                        title: customers
+                        id: items[i].id,
+                        title: projects
                             .firstWhere(
-                                (element) => element.id == items[i].customer)
+                                (element) => element.id == items[i].project)
                             .name,
                         subtitle: items[i].start +
                             ' - ' +

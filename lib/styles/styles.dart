@@ -31,6 +31,7 @@ class Styles {
   static InputDecoration input = InputDecoration(
     fillColor: Colors.white,
     focusColor: Colors.grey[900],
+    filled: true,
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.blue,
@@ -40,12 +41,11 @@ class Styles {
     border: OutlineInputBorder(
       gapPadding: 1.0,
       borderSide: BorderSide(
-        color: Colors.grey[600],
         width: 1.0,
       ),
     ),
     hintStyle: TextStyle(
-      color: Colors.grey[600],
+      color: Colors.grey[500],
     ),
   );
 }

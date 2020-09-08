@@ -2,7 +2,7 @@ List<Projects> projectsFromResponse(List<dynamic> items) =>
     new List<Projects>.from(items.map((x) => Projects.fromJson(x)));
 
 class Projects {
-  String id;
+  int id;
   String name;
   String jiraId;
   String ticketSystem;
@@ -25,7 +25,7 @@ class Projects {
   });
 
   factory Projects.fromJson(Map<String, dynamic> json) => new Projects(
-        id: json['project']['id'],
+        id: int.parse(json['project']['id']),
         name: json['project']['name'],
         jiraId: json['project']['jiraId'],
         ticketSystem: json['project']['ticket_system'],

@@ -1,36 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/models/items.dart';
+import 'package:timetracker_app/models/projects.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/services/api.dart';
+import 'package:timetracker_app/utils/projects_response.dart';
 import 'package:timetracker_app/utils/exceptions.dart';
-import 'package:timetracker_app/utils/items_response.dart';
 
-class ItemsProvider with ChangeNotifier {
+class ProjectsProvider with ChangeNotifier {
   bool _initialized = false;
 
   ApiService apiService;
   AuthProvider authProvider;
 
-  List<Items> _items = List<Items>();
-  Items _selectedItem;
+  List<Projects> _projects = List<Projects>();
 
   bool get initialized => _initialized;
-  List<Items> get items => _items;
-  Items get selectedItem => _selectedItem;
+  List<Projects> get projects => _projects;
 
-  ItemsProvider(AuthProvider authProvider) {
+  ProjectsProvider(AuthProvider authProvider) {
     this.apiService = ApiService(authProvider);
     this.authProvider = authProvider;
 
-    getItems();
+    getProjects();
   }
 
-  void getItems() async {
+  void getProjects() async {
     try {
-      ItemsResponse getItemsResponse = await apiService.getItems();
+      ProjectsResponse getProjectsResponse = await apiService.getProjects();
 
       _initialized = true;
-      _items = getItemsResponse.items;
+      _projects = getProjectsResponse.projects;
 
       notifyListeners();
     } on AuthException {
@@ -40,10 +38,4 @@ class ItemsProvider with ChangeNotifier {
       print(Exception);
     }
   }
-
-  void selectItem(int id) {
-    _selectedItem = _items.firstWhere((element) => element.id == id);
-  }
-
-  void createNewItem() {}
 }
