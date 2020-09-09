@@ -11,21 +11,27 @@ import 'package:timetracker_app/utils/exceptions.dart';
 import 'package:timetracker_app/utils/items_response.dart';
 import 'package:timetracker_app/utils/projects_response.dart';
 
-class DataProvider with ChangeNotifier {
-  bool _initialized = false;
+enum DataStatus {
+  Uninitialized,
+  NoData,
+  Loading,
+  Done,
+}
 
+class DataProvider with ChangeNotifier {
   ApiService apiService;
   AuthProvider authProvider;
 
   Items _selectedItem;
+  DataStatus _status = DataStatus.Uninitialized;
   List<Items> _items = List<Items>();
   List<Projects> _projects = List<Projects>();
   List<Customers> _customers = List<Customers>();
   List<Activities> _activities = List<Activities>();
 
   // Getters
-  bool get initialized => _initialized;
   Items get selectedItem => _selectedItem;
+  DataStatus get status => _status;
   List<Items> get items => _items;
   List<Projects> get projects => _projects;
   List<Customers> get customers => _customers;
@@ -35,19 +41,27 @@ class DataProvider with ChangeNotifier {
     this.apiService = ApiService(authProvider);
     this.authProvider = authProvider;
 
-    getItems();
     getProjects();
     getCustomers();
     getActivities();
-    _initialized = true;
+    getItems(false);
     notifyListeners();
   }
 
-  void getItems() async {
+  void getItems(refresh) async {
     try {
+      if (!refresh) {
+        _status = DataStatus.Loading;
+        notifyListeners();
+      }
+
       ItemsResponse getItemsResponse = await apiService.getItems();
 
       _items = getItemsResponse.items;
+      _status = DataStatus.Done;
+      if (_items.isEmpty) {
+        _status = DataStatus.NoData;
+      }
       notifyListeners();
     } on AuthException {
       // API returned a AuthException, so user is logged out.
@@ -57,7 +71,7 @@ class DataProvider with ChangeNotifier {
     }
   }
 
-  void postItem(BuildContext context, Items item) async {
+  Future<void> postItem(BuildContext context, Items item) async {
     try {
       await apiService.saveItem(context, item);
     } on AuthException {
@@ -70,6 +84,7 @@ class DataProvider with ChangeNotifier {
 
   void selectItem(int id) {
     _selectedItem = _items.firstWhere((element) => element.id == id);
+    notifyListeners();
   }
 
   void createNewItem() {}

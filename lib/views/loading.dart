@@ -14,12 +14,6 @@ class LoadingScreen extends StatelessWidget {
     initProvider(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Timetracker App'),
-        backgroundColor: Styles.backgroundColor,
-        elevation: 0,
-        centerTitle: true,
-      ),
       backgroundColor: Styles.backgroundColor,
       body: Center(
         child: Container(

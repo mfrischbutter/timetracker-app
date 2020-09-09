@@ -56,14 +56,11 @@ class ApiService {
       'date': item.dateStringForApi,
       'start': item.startString(context),
       'end': item.endString(context),
-      'user': item.user.toString(),
       'customer': item.customer.toString(),
       'project': item.project.toString(),
       'activity': item.activity.toString(),
       'description': item.description,
       'ticket': item.ticket,
-      'duration': item.durationString(),
-      'class': item.itemClass.toString(),
     };
 
     if (item.id != 0) {

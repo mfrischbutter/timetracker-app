@@ -34,7 +34,7 @@ class Items {
   });
 
   get dateString => DateFormat('dd.MM.yyyy').format(date);
-  get dateStringForApi => DateFormat('dd/MM/yyyy').format(date);
+  get dateStringForApi => DateFormat('yyyy-MM-dd').format(date);
   get startString => (context) {
         return start.format(context);
       };

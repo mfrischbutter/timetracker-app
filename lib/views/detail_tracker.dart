@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/models/activities.dart';
@@ -6,6 +7,7 @@ import 'package:timetracker_app/models/items.dart';
 import 'package:timetracker_app/models/projects.dart';
 import 'package:timetracker_app/provider/data.dart';
 import 'package:timetracker_app/styles/styles.dart';
+import 'package:timetracker_app/views/text_editor.dart';
 import 'package:timetracker_app/widgets/styled_flat_button.dart';
 import 'package:timetracker_app/widgets/tracker_entry.dart';
 
@@ -77,11 +79,15 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
     currentItem = widget.item;
   }
 
-  void submit() {
-    // Provider.of<DataProvider>(
-    //   context,
-    //   listen: false,
-    // ).postItem(context, currentItem);
+  void submit() async {
+    await Provider.of<DataProvider>(
+      context,
+      listen: false,
+    ).postItem(context, currentItem);
+    Provider.of<DataProvider>(
+      context,
+      listen: false,
+    ).getItems(false);
     Navigator.pop(context);
   }
 
@@ -91,26 +97,63 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
       context: context,
       initialDate: currentItem.date,
       lastDate: _today,
-      firstDate: DateTime(_today.year - 1, _today.month, _today.day),
+      firstDate: DateTime(
+        _today.year - 1,
+        _today.month,
+        _today.day,
+      ),
     );
-    setState(() {
-      currentItem.date = _selectedDate;
-    });
+    if (_selectedDate != null)
+      setState(() {
+        currentItem.date = _selectedDate;
+      });
   }
 
   void _showTimePicker(context, isStartTime) async {
-    TimeOfDay _now = TimeOfDay.now();
     TimeOfDay _selectedTime = await showTimePicker(
       context: context,
-      initialTime: _now,
+      initialTime: (isStartTime) ? currentItem.start : currentItem.end,
     );
-    setState(() {
-      if (isStartTime) {
-        currentItem.start = _selectedTime;
-      } else {
-        currentItem.end = _selectedTime;
-      }
-    });
+    if (_selectedTime != null)
+      setState(() {
+        if (isStartTime) {
+          currentItem.start = _selectedTime;
+        } else {
+          currentItem.end = _selectedTime;
+        }
+      });
+  }
+
+  void _openTextEditorTicket(context) async {
+    final result = await Navigator.push(
+      context,
+      SlideUpRoute(
+        page: TextEditorScreen(
+          inputValue: currentItem.ticket,
+          placeholder: 'Ticket',
+        ),
+      ),
+    );
+    if (result != null)
+      setState(() {
+        currentItem.ticket = result;
+      });
+  }
+
+  void _openTextEditorDescription(context) async {
+    final result = await Navigator.push(
+      context,
+      SlideUpRoute(
+        page: TextEditorScreen(
+          inputValue: currentItem.description,
+          placeholder: 'Beschreibung',
+        ),
+      ),
+    );
+    if (result != null)
+      setState(() {
+        currentItem.description = result;
+      });
   }
 
   @override
@@ -134,6 +177,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
           icon: Icons.label,
           title: 'Jira Ticket',
           content: widget.item.ticket,
+          onTap: () => _openTextEditorTicket(context),
         ),
         TrackerEntry(
           icon: Icons.person,
@@ -160,6 +204,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
           icon: Icons.description,
           title: 'Beschreibung',
           content: widget.item.description,
+          onTap: () => _openTextEditorDescription(context),
         ),
         SizedBox(
           height: 10,
@@ -179,4 +224,30 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
       ],
     );
   }
+}
+
+class SlideUpRoute extends PageRouteBuilder {
+  final Widget page;
+  SlideUpRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
 }
