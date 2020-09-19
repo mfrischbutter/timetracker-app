@@ -21,8 +21,10 @@ iOS (not tested yet)
 
 ### Todo (sorted)
 
-- Add entries
 - Edit entries
+- Add entries
+- Warning if changes not saved
+- Warning if saving the entry failed
 - Start & Stop timer for entries
 - Better Design
 - Summary
