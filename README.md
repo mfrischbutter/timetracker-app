@@ -16,10 +16,11 @@ iOS (not tested yet)
 
 - Auth (Login)
 - List recent entries
+- Detail Page for entries
+
 
 ### Todo (sorted)
 
-- Detail Page for entries
 - Add entries
 - Edit entries
 - Start & Stop timer for entries
