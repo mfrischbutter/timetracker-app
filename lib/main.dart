@@ -32,12 +32,22 @@ void main() {
             primaryColor: Styles.primaryColor,
             accentColor: Styles.primaryColor,
           ),
-          routes: {
-            '/': (context) => Router(),
-            '/login': (context) => LogInScreen(),
-            '/details': (context) => DetailTrackerScreen(
-                  isEdit: true,
-                ),
+          onGenerateRoute: (settings) {
+            final arguments = settings.arguments;
+            switch (settings.name) {
+              case '/':
+                return MaterialPageRoute(builder: (context) => Router());
+              case '/login':
+                return MaterialPageRoute(builder: (context) => LogInScreen());
+              case '/details':
+                return MaterialPageRoute(
+                    builder: (context) => DetailTrackerScreen(
+                          isEdit: true,
+                          id: arguments,
+                        ));
+              default:
+                return null;
+            }
           },
         ),
       ),

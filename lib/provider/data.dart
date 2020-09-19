@@ -22,7 +22,6 @@ class DataProvider with ChangeNotifier {
   ApiService apiService;
   AuthProvider authProvider;
 
-  Items _selectedItem;
   DataStatus _status = DataStatus.Uninitialized;
   List<Items> _items = List<Items>();
   List<Projects> _projects = List<Projects>();
@@ -30,7 +29,6 @@ class DataProvider with ChangeNotifier {
   List<Activities> _activities = List<Activities>();
 
   // Getters
-  Items get selectedItem => _selectedItem;
   DataStatus get status => _status;
   List<Items> get items => _items;
   List<Projects> get projects => _projects;
@@ -82,9 +80,23 @@ class DataProvider with ChangeNotifier {
     }
   }
 
-  void selectItem(int id) {
-    _selectedItem = _items.firstWhere((element) => element.id == id);
-    notifyListeners();
+  Items getCustomer(int id) {
+    //needed this workaround because some weird binding were happening between the list and the returned object
+    Items item = _items.firstWhere((element) => element.id == id);
+    return Items(
+      activity: item.activity,
+      customer: item.customer,
+      id: item.id,
+      date: item.date,
+      description: item.description,
+      duration: item.duration,
+      end: item.end,
+      start: item.start,
+      itemClass: item.itemClass,
+      project: item.project,
+      ticket: item.ticket,
+      user: item.user,
+    );
   }
 
   void createNewItem() {}
