@@ -5,10 +5,12 @@ import 'package:timetracker_app/models/items.dart';
 import 'package:timetracker_app/models/projects.dart';
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/provider/data.dart';
+import 'package:timetracker_app/views/list_selector.dart';
 import 'package:timetracker_app/views/text_editor.dart';
 import 'package:timetracker_app/widgets/slide_up_route.dart';
 import 'package:timetracker_app/widgets/styled_flat_button.dart';
 import 'package:timetracker_app/widgets/tracker_entry.dart';
+import 'package:timetracker_app/widgets/upper_case_formatter.dart';
 
 class DetailTrackerForm extends StatefulWidget {
   final Items item;
@@ -79,6 +81,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
       SlideUpRoute(
         page: TextEditorScreen(
           inputValue: widget.item.ticket,
+          inputFormatter: [UpperCaseTextFormatter()],
           placeholder: 'Ticket',
         ),
       ),
@@ -86,6 +89,51 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
     if (result != null)
       setState(() {
         widget.item.ticket = result;
+      });
+  }
+
+  void _openListSelectorProject(context) async {
+    final result = await Navigator.push(
+      context,
+      SlideUpRoute(
+        page: ListSelectorScreen(
+          items: widget.projects,
+        ),
+      ),
+    );
+    if (result != null)
+      setState(() {
+        widget.item.project = result;
+      });
+  }
+
+  void _openListSelectorCustomer(context) async {
+    final result = await Navigator.push(
+      context,
+      SlideUpRoute(
+        page: ListSelectorScreen(
+          items: widget.customers,
+        ),
+      ),
+    );
+    if (result != null)
+      setState(() {
+        widget.item.customer = result;
+      });
+  }
+
+  void _openListSelectorActivity(context) async {
+    final result = await Navigator.push(
+      context,
+      SlideUpRoute(
+        page: ListSelectorScreen(
+          items: widget.activities,
+        ),
+      ),
+    );
+    if (result != null)
+      setState(() {
+        widget.item.activity = result;
       });
   }
 
@@ -134,6 +182,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
           content: widget.customers
               .firstWhere((element) => element.id == widget.item.customer)
               .name,
+          onTap: () => _openListSelectorCustomer(context),
         ),
         TrackerEntry(
           icon: Icons.toys,
@@ -141,6 +190,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
           content: widget.projects
               .firstWhere((element) => element.id == widget.item.project)
               .name,
+          onTap: () => _openListSelectorProject(context),
         ),
         TrackerEntry(
           icon: Icons.directions_run,
@@ -148,6 +198,7 @@ class _DetailTrackerFormState extends State<DetailTrackerForm> {
           content: widget.activities
               .firstWhere((element) => element.id == widget.item.activity)
               .name,
+          onTap: () => _openListSelectorActivity(context),
         ),
         TrackerEntry(
           icon: Icons.description,
