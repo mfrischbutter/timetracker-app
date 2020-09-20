@@ -25,6 +25,7 @@ iOS (not tested yet)
 - Add entries
 - Warning if changes not saved
 - Warning if saving the entry failed
+- Code refractoring
 - Start & Stop timer for entries
 - Better Design
 - Summary
