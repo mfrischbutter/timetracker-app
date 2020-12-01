@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/utils/size_config.dart';
-import 'package:timetracker_app/view/widgets/activity_list_entry.dart';
-import 'package:timetracker_app/view/widgets/activity_list_title.dart';
+import 'package:timetracker_app/view/widgets/day_list_collection.dart';
 
 class ListOfTrackedActivities extends StatelessWidget {
   const ListOfTrackedActivities({Key key}) : super(key: key);
@@ -14,23 +13,8 @@ class ListOfTrackedActivities extends StatelessWidget {
         child: Column(
           children: List.unmodifiable(
             () sync* {
-              for (int i = 0; i < 10; i++) {
-                if (i != 0) {
-                  yield Divider(
-                    height: 0,
-                  );
-                }
-                yield ActivityListTitle(
-                  dayOfActivity: DateTime.now(),
-                );
-                yield Divider(
-                  height: 0,
-                );
-                yield ActivityListEntry(
-                  titleOfActivity: 'Test',
-                  durationOfActivity:
-                      Duration(minutes: 39, seconds: 12, hours: 3),
-                );
+              for (int i = 0; i < 5; i++) {
+                yield DayListCollection();
               }
             }(),
           ),

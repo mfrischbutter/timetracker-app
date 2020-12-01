@@ -1,6 +1,7 @@
 {
     "usernameLabel": "Nutzername",
     "passwordLabel": "Passwort",
+    "activateBiometricAuth": "Biometrische Authentifizierung",
     "loginBtn": "Login",
 
     "mogicLabel": "Wir gestalten Digital",
@@ -9,5 +10,5 @@
 
     "startActivityAppBarLabel": "Timetracking starten",
 
-    "stopLabel": "stop"
+    "stopLabel": "beenden"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/utils/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class RunningActivity extends StatelessWidget {
   const RunningActivity({Key key}) : super(key: key);
@@ -67,7 +68,7 @@ class RunningActivity extends StatelessWidget {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            ).tr(),
           ],
         ),
       ],

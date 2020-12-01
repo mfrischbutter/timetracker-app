@@ -31,8 +31,8 @@ class AppTheme {
     primarySwatch: mogicLightBlue,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: TextTheme(
-      bodyText2: TextStyle(fontSize: 20),
-      bodyText1: TextStyle(fontSize: 18),
+      bodyText2: TextStyle(fontSize: 18),
+      bodyText1: TextStyle(fontSize: 16),
       button: TextStyle(
         fontSize: 18,
       ),
