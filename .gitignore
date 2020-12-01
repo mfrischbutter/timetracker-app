@@ -13,8 +13,6 @@
 .pub/
 build/
 
-# Firebase related
-**/ios/Runner/GoogleService-Info.plist
 
 # Android related
 **/android/.gradle
