@@ -1,0 +1,13 @@
+{
+    "usernameLabel": "Nutzername",
+    "passwordLabel": "Passwort",
+    "loginBtn": "Login",
+
+    "mogicLabel": "Wir gestalten Digital",
+    "timelineLabel": "Timeline",
+    "settingsLabel": "Einstellungen",
+
+    "startActivityAppBarLabel": "Timetracking starten",
+
+    "stopLabel": "stop"
+}

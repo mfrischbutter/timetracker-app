@@ -14,6 +14,19 @@ class AppTheme {
     900: Color.fromRGBO(63, 126, 255, 1),
   });
 
+  static MaterialColor mogicDarkBlue = MaterialColor(0xff22479b, {
+    50: Color.fromRGBO(34, 71, 155, .1),
+    100: Color.fromRGBO(34, 71, 155, .2),
+    200: Color.fromRGBO(34, 71, 155, .3),
+    300: Color.fromRGBO(34, 71, 155, .4),
+    400: Color.fromRGBO(34, 71, 155, .5),
+    500: Color.fromRGBO(34, 71, 155, .6),
+    600: Color.fromRGBO(34, 71, 155, .7),
+    700: Color.fromRGBO(34, 71, 155, .8),
+    800: Color.fromRGBO(34, 71, 155, .9),
+    900: Color.fromRGBO(34, 71, 155, 1),
+  });
+
   static ThemeData light = ThemeData(
     primarySwatch: mogicLightBlue,
     visualDensity: VisualDensity.adaptivePlatformDensity,

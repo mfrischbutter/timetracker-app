@@ -11,15 +11,29 @@ class ListOfTrackedActivities extends StatelessWidget {
     return Center(
       child: Container(
         width: 90.bsh(),
-        child: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          itemCount: 20,
-          itemBuilder: (context, i) {
-            return ActivityListEntry(
-              titleOfActivity: 'Test',
-              durationOfActivity: Duration(minutes: 39, seconds: 12, hours: 3),
-            );
-          },
+        child: Column(
+          children: List.unmodifiable(
+            () sync* {
+              for (int i = 0; i < 10; i++) {
+                if (i != 0) {
+                  yield Divider(
+                    height: 0,
+                  );
+                }
+                yield ActivityListTitle(
+                  dayOfActivity: DateTime.now(),
+                );
+                yield Divider(
+                  height: 0,
+                );
+                yield ActivityListEntry(
+                  titleOfActivity: 'Test',
+                  durationOfActivity:
+                      Duration(minutes: 39, seconds: 12, hours: 3),
+                );
+              }
+            }(),
+          ),
         ),
       ),
     );

@@ -4,7 +4,10 @@ import 'package:timetracker_app/utils/size_config.dart';
 class ActivityListTitle extends StatelessWidget {
   final DateTime dayOfActivity;
 
-  const ActivityListTitle({Key key, this.dayOfActivity}) : super(key: key);
+  const ActivityListTitle({
+    Key key,
+    @required this.dayOfActivity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,10 @@ class ActivityListTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(dayOfActivity.toIso8601String()),
+          Text(
+            dayOfActivity.toIso8601String(),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+          ),
         ],
       ),
     );

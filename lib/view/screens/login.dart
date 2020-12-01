@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -44,14 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           TextFormField(
             style: TextStyle(fontSize: 20),
-            decoration: InputDecoration(labelText: 'usernameLabel'),
+            decoration: InputDecoration(labelText: tr('usernameLabel')),
           ),
           SizedBox(
             height: 2.bsv(),
           ),
           TextFormField(
             style: TextStyle(fontSize: 20),
-            decoration: InputDecoration(labelText: 'passwordLabel'),
+            decoration: InputDecoration(labelText: tr('passwordLabel')),
           ),
           SizedBox(
             height: 1.8.bsv(),
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushReplacementNamed(context, Routes.dashboard);
               },
               child: Text(
-                'loginBtn',
+                tr('loginBtn'),
                 style: TextStyle(color: Colors.white),
               ),
             ),
