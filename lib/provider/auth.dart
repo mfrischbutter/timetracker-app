@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:timetracker_app/api/login_request.dart';
+import 'package:timetracker_app/config/env.dart';
 import 'package:timetracker_app/models/user.dart';
 
 enum AuthStatus {
@@ -26,7 +27,7 @@ class AuthProvider with ChangeNotifier {
         sessionId: sessionId,
       );
 
-  final String api = 'https://tt.mogic.com';
+  final String _api = Env.api;
 
   init() async {
     await _getUserModel();
@@ -55,7 +56,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> checkLoginStatus() async {
     http.Response response = await http.get(
-      api + '/status/check',
+      _api + '/status/check',
       headers: {'cookie': _sessionId},
     );
     var status = json.decode(response.body);
@@ -70,7 +71,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     http.Response response = await http.post(
-      api + '/login',
+      _api + '/login',
       body: data.toMap(),
     );
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/models/user.dart';
+import 'package:timetracker_app/api/api_reponse.dart';
+import 'package:timetracker_app/api/service.dart';
 
 enum ActivitiesStatus {
   Uninitialized,
@@ -9,12 +10,10 @@ enum ActivitiesStatus {
 
 class ActivitiesProvider extends ChangeNotifier {
   ActivitiesStatus _status = ActivitiesStatus.Uninitialized;
-  UserModel _user;
 
   ActivitiesStatus get status => _status;
-  UserModel get user => _user;
 
-  fetchActivitiesForUser(UserModel user) {
-    _user = user;
+  fetchActivitiesForUser() async {
+    ApiResponse _response = await ApiService().fetchActivities();
   }
 }
