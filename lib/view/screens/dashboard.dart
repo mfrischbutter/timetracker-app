@@ -4,7 +4,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/provider/activties.dart';
-import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
@@ -18,9 +17,7 @@ class DashboardScreen extends StatelessWidget {
   _fetchInitialActivities() {
     if (services.get<ActivitiesProvider>().status ==
         ActivitiesStatus.Uninitialized)
-      services
-          .get<ActivitiesProvider>()
-          .fetchActivitiesForUser(services.get<AuthProvider>().user);
+      services.get<ActivitiesProvider>().fetchActivitiesForUser();
   }
 
   @override
