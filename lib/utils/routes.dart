@@ -1,12 +1,12 @@
 import 'package:timetracker_app/view/screens/dashboard.dart';
 import 'package:timetracker_app/view/screens/login.dart';
-import 'package:timetracker_app/view/screens/start_activity.dart';
+import 'package:timetracker_app/view/screens/add_activity.dart';
 
 class Routes {
   static final routes = {
     login: (context) => LoginScreen(),
     dashboard: (context) => DashboardScreen(),
-    startActivity: (context) => StartActivityScreen(),
+    startActivity: (context) => AddActivityScreen(),
   };
 
   static String login = '/login';
