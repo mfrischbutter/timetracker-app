@@ -10,5 +10,8 @@
 
     "addActivityAppBarLabel": "Zeiterfassung",
 
+    "todayLabel": "Heute",
+    "yesterdayLabel": "Gestern",
+
     "stopLabel": "beenden"
 }
