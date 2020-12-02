@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/services.dart';
+import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -36,6 +39,13 @@ class ModalMenu extends StatelessWidget {
             height: 2.bsv(),
           ),
           Text('settingsLabel').tr(),
+          TextButton(
+            onPressed: () {
+              services.get<AuthProvider>().logOut();
+              Navigator.pushReplacementNamed(context, Routes.login);
+            },
+            child: Text('logout (debug)'),
+          ),
         ],
       ),
     );

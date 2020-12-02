@@ -4,6 +4,11 @@
     "activateBiometricAuth": "Biometrische Authentifizierung",
     "loginBtn": "Login",
 
+    "usernameRequired": "Nutzername ist erforderlich",
+    "passwordRequired": "Passwort ist erforderlich",
+
+    "loginFailed": "Login ist fehlgeschlagen.",
+
     "mogicLabel": "Wir gestalten Digital",
     "timelineLabel": "Timeline",
     "settingsLabel": "Einstellungen",
