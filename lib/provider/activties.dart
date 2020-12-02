@@ -15,5 +15,6 @@ class ActivitiesProvider extends ChangeNotifier {
 
   fetchActivitiesForUser() async {
     ApiResponse _response = await ApiService().fetchActivities();
+    
   }
 }
