@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:timetracker_app/config/app_theme.dart';
+import 'package:timetracker_app/provider/activties.dart';
+import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 import 'package:timetracker_app/view/widgets/list_of_tracked_activities.dart';
@@ -11,8 +15,17 @@ import 'package:timetracker_app/view/widgets/running_activity.dart';
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key key}) : super(key: key);
 
+  _fetchInitialActivities() {
+    if (services.get<ActivitiesProvider>().status ==
+        ActivitiesStatus.Uninitialized)
+      services
+          .get<ActivitiesProvider>()
+          .fetchActivitiesForUser(services.get<AuthProvider>().user);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _fetchInitialActivities();
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
@@ -21,12 +34,22 @@ class DashboardScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: SafeArea(
-          child: Column(
-            children: [
-              RunningActivity(),
-              ListOfTrackedActivities(),
-            ],
+        child: Center(
+          child: SafeArea(
+            child: Column(
+              children: [
+                RunningActivity(),
+                Consumer<ActivitiesProvider>(
+                  builder: (context, activities, child) {
+                    if (activities.status == ActivitiesStatus.Done) {
+                      return ListOfTrackedActivities();
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

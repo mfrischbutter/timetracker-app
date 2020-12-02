@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/config/app_theme.dart';
+import 'package:timetracker_app/provider/activties.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'services.dart';
@@ -21,6 +22,9 @@ void main() async {
     providers: [
       ChangeNotifierProvider.value(
         value: services.get<AuthProvider>(),
+      ),
+      ChangeNotifierProvider.value(
+        value: services.get<ActivitiesProvider>(),
       ),
     ],
     child: EasyLocalization(

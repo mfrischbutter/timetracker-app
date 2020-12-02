@@ -7,17 +7,15 @@ class ListOfTrackedActivities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 90.bsh(),
-        child: Column(
-          children: List.unmodifiable(
-            () sync* {
-              for (int i = 0; i < 5; i++) {
-                yield DayListCollection();
-              }
-            }(),
-          ),
+    return Container(
+      width: 90.bsh(),
+      child: Column(
+        children: List.unmodifiable(
+          () sync* {
+            for (int i = 0; i < 5; i++) {
+              yield DayListCollection();
+            }
+          }(),
         ),
       ),
     );
