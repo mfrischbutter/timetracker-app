@@ -18,5 +18,9 @@
     "todayLabel": "Heute",
     "yesterdayLabel": "Gestern",
 
-    "stopLabel": "beenden"
+    "stopLabel": "beenden",
+
+    "dayOption0": "3 Tage",
+    "dayOption1": "7 Tage",
+    "dayOption2": "31 Tage"
 }

@@ -6,8 +6,20 @@
     "configurations": [
         {
             "name": "timetracker_app",
+            "type": "dart",
             "request": "launch",
-            "type": "dart"
+        },
+        {
+            "name": "timetracker_app profiling",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "profile",
+        },
+        {
+            "name": "timetracker_app release",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "release",
         }
     ]
 }

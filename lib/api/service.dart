@@ -10,7 +10,7 @@ class ApiService {
   Future<ApiResponse> fetchActivities() async {
     String _sessionId = services.get<AuthProvider>().sessionId;
     final response = await http.get(
-      _api + '/getData/days/3',
+      _api + '/getData/days/7',
       headers: {
         'cookie': _sessionId,
       },

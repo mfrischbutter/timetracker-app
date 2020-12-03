@@ -7,6 +7,7 @@ import 'package:timetracker_app/provider/activties.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
+import 'package:timetracker_app/view/widgets/activity_filter_options.dart';
 import 'package:timetracker_app/view/widgets/list_of_tracked_activities.dart';
 import 'package:timetracker_app/view/widgets/modal_menu.dart';
 import 'package:timetracker_app/view/widgets/running_activity.dart';
@@ -39,9 +40,23 @@ class DashboardScreen extends StatelessWidget {
                 Consumer<ActivitiesProvider>(
                   builder: (context, activities, child) {
                     if (activities.status == ActivitiesStatus.Done) {
-                      return ListOfTrackedActivities();
+                      return Column(
+                        children: [
+                          ActivityFilterOptions(),
+                          ListOfTrackedActivities(
+                            activities: activities.activitiesGrouped,
+                          ),
+                        ],
+                      );
                     } else {
-                      return CircularProgressIndicator();
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 20.bsv(),
+                          ),
+                          CircularProgressIndicator(),
+                        ],
+                      );
                     }
                   },
                 ),

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/utils/helper.dart';
 
+List<Activity> activitiesListFromResponse(List<dynamic> activities) {
+  return List<Activity>.from(activities.map((x) => Activity.fromJson(x)));
+}
+
 class Activity {
   int id;
   DateTime date;
@@ -47,7 +51,9 @@ class Activity {
       customer: json['entry']['customer'],
       project: json['entry']['project'],
       activity: json['entry']['activity'],
-      description: json['entry']['description'],
+      description: (json['entry']['description'] != '')
+          ? json['entry']['description']
+          : null,
       ticket: json['entry']['ticket'],
     );
   }

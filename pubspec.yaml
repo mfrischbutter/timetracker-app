@@ -18,6 +18,7 @@ dependencies:
   modal_bottom_sheet: ^1.0.0+1
   provider: ^4.3.2+2
   intl: ^0.16.1
+  collection: ^1.14.13
 
 dev_dependencies:
   flutter_test:

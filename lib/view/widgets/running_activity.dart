@@ -14,7 +14,8 @@ class RunningActivity extends StatelessWidget {
           height: 1.bsv(),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 2.bsv(), horizontal: 4.bsh()),
+          padding: EdgeInsets.only(
+              top: 2.bsv(), left: 4.bsh(), right: 4.bsh(), bottom: 1.bsv()),
           width: 90.bsh(),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
@@ -26,7 +27,7 @@ class RunningActivity extends StatelessWidget {
               colors: [AppTheme.mogicDarkBlue, AppTheme.mogicLightBlue],
             ),
           ),
-          child: _buildBoxContent(),
+          child: _buildBoxContent(context),
         ),
         SizedBox(
           height: 1.bsv(),
@@ -35,7 +36,7 @@ class RunningActivity extends StatelessWidget {
     );
   }
 
-  _buildBoxContent() {
+  _buildBoxContent(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,10 +45,7 @@ class RunningActivity extends StatelessWidget {
           children: [
             Text(
               'Meeting',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             Text(
               '00:03:23',
@@ -62,13 +60,22 @@ class RunningActivity extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(''),
-            Text(
-              'stopLabel',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.bsh()),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(2.bsh()),
+                  child: Text(
+                    'stopLabel',
+                    style: Theme.of(context).textTheme.headline2,
+                  ).tr(),
+                ),
               ),
-            ).tr(),
+            ),
           ],
         ),
       ],

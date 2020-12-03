@@ -44,36 +44,36 @@ class AddActivityScreen extends StatelessWidget {
           SizedBox(
             height: 1.bsv(),
           ),
-          Container(
-            width: 90.bsh(),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  onTap: () {},
-                  title: Text('Ticket'),
-                  trailing: Icon(CupertinoIcons.chevron_forward),
-                ),
-                Divider(
-                  height: 0,
-                ),
-                ListTile(
-                  onTap: () {},
-                  title: Text('Kunde'),
-                  trailing: Icon(CupertinoIcons.chevron_forward),
-                ),
-                Divider(
-                  height: 0,
-                ),
-                ListTile(
-                  onTap: () {},
-                  title: Text('Projekt'),
-                  trailing: Icon(CupertinoIcons.chevron_forward),
-                ),
-              ],
+          Material(
+            color: Colors.grey[200],
+            child: Container(
+              width: 90.bsh(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    onTap: () {},
+                    title: Text('Ticket'),
+                    trailing: Icon(CupertinoIcons.chevron_forward),
+                  ),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    onTap: () {},
+                    title: Text('Kunde'),
+                    trailing: Icon(CupertinoIcons.chevron_forward),
+                  ),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    onTap: () {},
+                    title: Text('Projekt'),
+                    trailing: Icon(CupertinoIcons.chevron_forward),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
