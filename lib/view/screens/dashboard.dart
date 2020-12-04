@@ -7,6 +7,7 @@ import 'package:timetracker_app/provider/activties.dart';
 import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/project_activities.dart';
 import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/provider/settings.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
@@ -16,7 +17,8 @@ import 'package:timetracker_app/view/widgets/modal_menu.dart';
 import 'package:timetracker_app/view/widgets/running_activity.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key key}) : super(key: key);
+  DashboardScreen({Key key}) : super(key: key);
+  int _daysToFilterActivities;
 
   _fetchInitialActivities() {
     if (services.get<ActivitiesProvider>().status ==
@@ -26,6 +28,12 @@ class DashboardScreen extends StatelessWidget {
       services.get<ProjectsProvider>().fetchProjects();
       services.get<CustomersProvider>().fetchCustomers();
     }
+    services.get<SettingsProvider>().daysToFilterActivities.listen((val) {
+      if (_daysToFilterActivities == null) {
+        return _daysToFilterActivities = val;
+      }
+      services.get<ActivitiesProvider>().fetchActivitiesForUser();
+    });
   }
 
   @override

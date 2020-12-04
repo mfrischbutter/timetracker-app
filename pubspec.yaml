@@ -19,6 +19,8 @@ dependencies:
   provider: ^4.3.2+2
   intl: ^0.16.1
   collection: ^1.14.13
+  streaming_shared_preferences: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:

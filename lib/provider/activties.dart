@@ -20,6 +20,8 @@ class ActivitiesProvider extends ChangeNotifier {
   Map get activitiesGrouped => _activitiesGrouped;
 
   fetchActivitiesForUser() async {
+    _status = ActivitiesStatus.Loading;
+    notifyListeners();
     ApiResponse _response = await ApiService().fetchActivities();
     List<Activity> _activities =
         activitiesListFromResponse(jsonDecode(_response.data));

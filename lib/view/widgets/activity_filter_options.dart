@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:timetracker_app/provider/settings.dart';
+import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -10,10 +13,17 @@ class ActivityFilterOptions extends StatefulWidget {
 }
 
 class _ActivityFilterOptionsState extends State<ActivityFilterOptions> {
-  int _value = 1;
-
   @override
   Widget build(BuildContext context) {
+    return PreferenceBuilder<int>(
+      preference: services.get<SettingsProvider>().daysToFilterActivities,
+      builder: (context, days) {
+        return _buildBody(days);
+      },
+    );
+  }
+
+  _buildBody(daysIndex) {
     return Container(
       width: 90.bsh(),
       child: Row(
@@ -23,11 +33,9 @@ class _ActivityFilterOptionsState extends State<ActivityFilterOptions> {
           (int index) {
             return ChoiceChip(
               label: Text('dayOption$index').tr(),
-              selected: _value == index,
+              selected: daysIndex == index,
               onSelected: (bool selected) {
-                setState(() {
-                  _value = index;
-                });
+                services.get<SettingsProvider>().daysToFilterActivities = index;
               },
             );
           },

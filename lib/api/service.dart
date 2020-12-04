@@ -1,7 +1,9 @@
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:timetracker_app/api/api_reponse.dart';
 import 'package:timetracker_app/config/env.dart';
 import 'package:http/http.dart' as http;
 import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/provider/settings.dart';
 import 'package:timetracker_app/services.dart';
 
 class ApiService {
@@ -9,8 +11,21 @@ class ApiService {
 
   Future<ApiResponse> fetchActivities() async {
     String _sessionId = services.get<AuthProvider>().sessionId;
+    int days =
+        services.get<SettingsProvider>().daysToFilterActivities.getValue();
+
+    switch (days) {
+      case 0:
+        days = 3;
+        break;
+      case 1:
+        days = 7;
+        break;
+      case 2:
+        days = 31;
+    }
     final response = await http.get(
-      _api + '/getData/days/7',
+      _api + '/getData/days/' + days.toString(),
       headers: {
         'cookie': _sessionId,
       },

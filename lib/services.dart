@@ -4,6 +4,7 @@ import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/provider/customers.dart';
 import 'package:timetracker_app/provider/project_activities.dart';
 import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/provider/settings.dart';
 
 GetIt services = GetIt.instance;
 
@@ -28,6 +29,11 @@ initServices() {
       ]);
   services.registerSingletonAsync<ProjectsProvider>(
       () async => ProjectsProvider(),
+      dependsOn: [
+        AuthProvider,
+      ]);
+  services.registerSingletonAsync<SettingsProvider>(
+      () async => SettingsProvider().init(),
       dependsOn: [
         AuthProvider,
       ]);
