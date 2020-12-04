@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/provider/activties.dart';
 import 'package:timetracker_app/provider/auth.dart';
+import 'package:timetracker_app/provider/customers.dart';
+import 'package:timetracker_app/provider/project_activities.dart';
+import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'services.dart';
 
@@ -25,6 +28,15 @@ void main() async {
       ),
       ChangeNotifierProvider.value(
         value: services.get<ActivitiesProvider>(),
+      ),
+      ChangeNotifierProvider.value(
+        value: services.get<CustomersProvider>(),
+      ),
+      ChangeNotifierProvider.value(
+        value: services.get<ProjectActivitiesProvider>(),
+      ),
+      ChangeNotifierProvider.value(
+        value: services.get<ProjectsProvider>(),
       ),
     ],
     child: EasyLocalization(

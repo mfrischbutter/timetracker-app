@@ -1,4 +1,4 @@
-List<ProjectActivity> activitiesFromResponse(List<dynamic> items) =>
+List<ProjectActivity> projectActivitiesFromResponse(List<dynamic> items) =>
     new List<ProjectActivity>.from(
         items.map((x) => ProjectActivity.fromJson(x)));
 

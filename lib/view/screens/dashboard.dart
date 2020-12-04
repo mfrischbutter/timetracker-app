@@ -4,6 +4,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/provider/activties.dart';
+import 'package:timetracker_app/provider/customers.dart';
+import 'package:timetracker_app/provider/project_activities.dart';
+import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:timetracker_app/utils/size_config.dart';
@@ -17,8 +20,12 @@ class DashboardScreen extends StatelessWidget {
 
   _fetchInitialActivities() {
     if (services.get<ActivitiesProvider>().status ==
-        ActivitiesStatus.Uninitialized)
+        ActivitiesStatus.Uninitialized) {
       services.get<ActivitiesProvider>().fetchActivitiesForUser();
+      services.get<ProjectActivitiesProvider>().fetchProjectActivities();
+      services.get<ProjectsProvider>().fetchProjects();
+      services.get<CustomersProvider>().fetchCustomers();
+    }
   }
 
   @override
@@ -37,9 +44,15 @@ class DashboardScreen extends StatelessWidget {
             child: Column(
               children: [
                 RunningActivity(),
-                Consumer<ActivitiesProvider>(
-                  builder: (context, activities, child) {
-                    if (activities.status == ActivitiesStatus.Done) {
+                Consumer4<ActivitiesProvider, ProjectActivitiesProvider,
+                    ProjectsProvider, CustomersProvider>(
+                  builder: (context, activities, projectActivties, projects,
+                      customers, child) {
+                    if (activities.status == ActivitiesStatus.Done &&
+                        projectActivties.status ==
+                            ProjectActivitiesStatus.Done &&
+                        projects.status == ProjectsStatus.Done &&
+                        customers.status == CustomersStatus.Done) {
                       return Column(
                         children: [
                           ActivityFilterOptions(),
