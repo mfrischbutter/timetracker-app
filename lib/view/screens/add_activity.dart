@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:timetracker_app/api/activity_request.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 
 class AddActivityScreen extends StatelessWidget {
@@ -17,14 +18,31 @@ class AddActivityScreen extends StatelessWidget {
         child: Center(
           child: Container(
             width: 90.bsh(),
-            child: _buildForm(),
+            child: AddActivityForm(),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildForm() {
+class AddActivityForm extends StatefulWidget {
+  AddActivityForm({Key key}) : super(key: key);
+
+  @override
+  _AddActivityFormState createState() => _AddActivityFormState();
+}
+
+class _AddActivityFormState extends State<AddActivityForm> {
+  ActivityRequest _data = ActivityRequest();
+  TimeOfDay _futureTime = TimeOfDay.fromDateTime(
+    DateTime.now().add(
+      Duration(minutes: 15),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +55,9 @@ class AddActivityScreen extends StatelessWidget {
             height: 1.bsv(),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () async {
+              _data.date = await _selectDate(context);
+            },
             elevation: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +80,12 @@ class AddActivityScreen extends StatelessWidget {
             height: 1.bsv(),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final time = await _selectTime(context);
+              setState(() {
+                _data.start = time;
+              });
+            },
             elevation: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +93,11 @@ class AddActivityScreen extends StatelessWidget {
                 Row(
                   children: [
                     Icon(CupertinoIcons.clock),
-                    Text(' 12:23'),
+                    Text(
+                      (_data.start != null)
+                          ? _data.start.format(context)
+                          : TimeOfDay.now().format(context),
+                    ),
                   ],
                 ),
                 Text('changeLabel').tr(),
@@ -83,7 +112,12 @@ class AddActivityScreen extends StatelessWidget {
             height: 1.bsv(),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final time = await _selectTime(context, _futureTime);
+              setState(() {
+                _data.end = time;
+              });
+            },
             elevation: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,7 +125,11 @@ class AddActivityScreen extends StatelessWidget {
                 Row(
                   children: [
                     Icon(CupertinoIcons.clock),
-                    Text(' 15:50'),
+                    Text(
+                      (_data.end != null)
+                          ? _data.end.format(context)
+                          : _futureTime.format(context),
+                    ),
                   ],
                 ),
                 Text('changeLabel').tr(),
@@ -165,6 +203,25 @@ class AddActivityScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  _selectDate(context) async {
+    return await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+  }
+
+  _selectTime(context, [TimeOfDay initialTime]) async {
+    if (initialTime == null) {
+      initialTime = TimeOfDay.now();
+    }
+    return await showTimePicker(
+      context: context,
+      initialTime: initialTime,
     );
   }
 }

@@ -105,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             width: double.infinity,
             child: RaisedButton(
+              color: AppTheme.mogicLightBlue,
               onPressed: _submit,
               child: _loading
                   ? CircularProgressIndicator(
