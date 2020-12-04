@@ -184,6 +184,14 @@ class _AddActivityFormState extends State<AddActivityForm> {
                     title: Text('projectLabel').tr(),
                     trailing: Icon(CupertinoIcons.chevron_forward),
                   ),
+                  Divider(
+                    height: 0,
+                  ),
+                  ListTile(
+                    onTap: () {},
+                    title: Text('projectActivityLabel').tr(),
+                    trailing: Icon(CupertinoIcons.chevron_forward),
+                  ),
                 ],
               ),
             ),

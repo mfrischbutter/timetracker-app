@@ -18,4 +18,40 @@ class ApiService {
 
     return ApiResponse.fromResponse(response);
   }
+
+  Future<ApiResponse> fetchCustomers() async {
+    String _sessionId = services.get<AuthProvider>().sessionId;
+    final response = await http.get(
+      _api + '/getCustomers',
+      headers: {
+        'cookie': _sessionId,
+      },
+    );
+
+    return ApiResponse.fromResponse(response);
+  }
+
+  Future<ApiResponse> fetchProjectActivities() async {
+    String _sessionId = services.get<AuthProvider>().sessionId;
+    final response = await http.get(
+      _api + '/getActivities',
+      headers: {
+        'cookie': _sessionId,
+      },
+    );
+
+    return ApiResponse.fromResponse(response);
+  }
+
+  Future<ApiResponse> fetchProjects() async {
+    String _sessionId = services.get<AuthProvider>().sessionId;
+    final response = await http.get(
+      _api + '/getProjects',
+      headers: {
+        'cookie': _sessionId,
+      },
+    );
+
+    return ApiResponse.fromResponse(response);
+  }
 }

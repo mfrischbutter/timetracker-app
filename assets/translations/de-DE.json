@@ -33,6 +33,7 @@
     "ticketLabel": "Ticket",
     "customerLabel": "Kunde",
     "projectLabel": "Project",
+    "projectActivityLabel": "Tätigkeit",
     "descriptionLabel": "Beschreibung",
 
     "noDescription": "Keine Beschreibung",
