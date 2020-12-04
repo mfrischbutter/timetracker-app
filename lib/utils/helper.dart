@@ -23,7 +23,7 @@ class Helper {
   }
 
   String convertDateTime(DateTime date) {
-    return DateFormat('dd.MM.yyy').format(date);
+    return DateFormat('dd.MM.yyyy').format(date);
   }
 
   String convertDateTimeWithToday(DateTime date) {

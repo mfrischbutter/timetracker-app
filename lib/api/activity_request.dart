@@ -13,5 +13,7 @@ class ActivityRequest {
 
   Map<String, dynamic> toMap() => {
         "date": date,
+        "start": start,
+        "end": end,
       };
 }

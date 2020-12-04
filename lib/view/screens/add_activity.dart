@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:timetracker_app/api/activity_request.dart';
+import 'package:timetracker_app/utils/helper.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 
 class AddActivityScreen extends StatelessWidget {
@@ -34,10 +35,18 @@ class AddActivityForm extends StatefulWidget {
 }
 
 class _AddActivityFormState extends State<AddActivityForm> {
-  ActivityRequest _data = ActivityRequest();
   TimeOfDay _futureTime = TimeOfDay.fromDateTime(
     DateTime.now().add(
       Duration(minutes: 15),
+    ),
+  );
+  ActivityRequest _data = ActivityRequest(
+    date: DateTime.now(),
+    start: TimeOfDay.now(),
+    end: TimeOfDay.fromDateTime(
+      DateTime.now().add(
+        Duration(minutes: 15),
+      ),
     ),
   );
 
@@ -56,7 +65,13 @@ class _AddActivityFormState extends State<AddActivityForm> {
           ),
           RaisedButton(
             onPressed: () async {
-              _data.date = await _selectDate(context);
+              final date = await _selectDate(context);
+              if (date == null) {
+                return;
+              }
+              setState(() {
+                _data.date = date;
+              });
             },
             elevation: 0,
             child: Row(
@@ -65,7 +80,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
                 Row(
                   children: [
                     Icon(CupertinoIcons.calendar_today),
-                    Text(' 31.12.2020'),
+                    Text(Helper().convertDateTime(_data.date)),
                   ],
                 ),
                 Text('changeLabel').tr(),
@@ -82,6 +97,9 @@ class _AddActivityFormState extends State<AddActivityForm> {
           RaisedButton(
             onPressed: () async {
               final time = await _selectTime(context);
+              if (time == null) {
+                return;
+              }
               setState(() {
                 _data.start = time;
               });
@@ -93,11 +111,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
                 Row(
                   children: [
                     Icon(CupertinoIcons.clock),
-                    Text(
-                      (_data.start != null)
-                          ? _data.start.format(context)
-                          : TimeOfDay.now().format(context),
-                    ),
+                    Text(_data.start.format(context)),
                   ],
                 ),
                 Text('changeLabel').tr(),
@@ -114,6 +128,9 @@ class _AddActivityFormState extends State<AddActivityForm> {
           RaisedButton(
             onPressed: () async {
               final time = await _selectTime(context, _futureTime);
+              if (time == null) {
+                return;
+              }
               setState(() {
                 _data.end = time;
               });
@@ -125,11 +142,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
                 Row(
                   children: [
                     Icon(CupertinoIcons.clock),
-                    Text(
-                      (_data.end != null)
-                          ? _data.end.format(context)
-                          : _futureTime.format(context),
-                    ),
+                    Text(_data.end.format(context)),
                   ],
                 ),
                 Text('changeLabel').tr(),
