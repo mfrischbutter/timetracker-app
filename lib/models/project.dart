@@ -1,5 +1,5 @@
-List<Projects> projectsFromResponse(List<dynamic> items) =>
-    new List<Projects>.from(items.map((x) => Projects.fromJson(x)));
+List<Project> projectsFromResponse(List<dynamic> items) =>
+    new List<Project>.from(items.map((x) => Project.fromJson(x)));
 
 class Project {
   int id;
