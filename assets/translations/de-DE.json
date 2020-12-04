@@ -22,5 +22,19 @@
 
     "dayOption0": "3 Tage",
     "dayOption1": "7 Tage",
-    "dayOption2": "31 Tage"
+    "dayOption2": "31 Tage",
+
+    "dateLabel": "Datum",
+    "startTimeLabel": "Von",
+    "endTimeLabel": "Bis",
+    "detailsLabel": "Details",
+    "infoLabel": "Informationen",
+    "changeLabel": "bearbeiten",
+    "ticketLabel": "Ticket",
+    "customerLabel": "Kunde",
+    "projectLabel": "Project",
+    "descriptionLabel": "Beschreibung",
+
+    "noDescription": "Keine Beschreibung",
+    "saveLabel": "speichern"
 }

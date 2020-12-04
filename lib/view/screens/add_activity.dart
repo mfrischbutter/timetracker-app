@@ -32,11 +32,72 @@ class AddActivityScreen extends StatelessWidget {
           SizedBox(
             height: 2.bsv(),
           ),
-          Text('timeLabel').tr(),
+          Text('dateLabel').tr(),
           SizedBox(
             height: 1.bsv(),
           ),
-          Text('TimeSelector'),
+          RaisedButton(
+            onPressed: () {},
+            elevation: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.calendar_today),
+                    Text(' 31.12.2020'),
+                  ],
+                ),
+                Text('changeLabel').tr(),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 2.bsv(),
+          ),
+          Text('startTimeLabel').tr(),
+          SizedBox(
+            height: 1.bsv(),
+          ),
+          RaisedButton(
+            onPressed: () {},
+            elevation: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.clock),
+                    Text(' 12:23'),
+                  ],
+                ),
+                Text('changeLabel').tr(),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 2.bsv(),
+          ),
+          Text('endTimeLabel').tr(),
+          SizedBox(
+            height: 1.bsv(),
+          ),
+          RaisedButton(
+            onPressed: () {},
+            elevation: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.clock),
+                    Text(' 15:50'),
+                  ],
+                ),
+                Text('changeLabel').tr(),
+              ],
+            ),
+          ),
           SizedBox(
             height: 3.bsv(),
           ),
@@ -53,7 +114,7 @@ class AddActivityScreen extends StatelessWidget {
                 children: [
                   ListTile(
                     onTap: () {},
-                    title: Text('Ticket'),
+                    title: Text('ticketLabel').tr(),
                     trailing: Icon(CupertinoIcons.chevron_forward),
                   ),
                   Divider(
@@ -61,7 +122,7 @@ class AddActivityScreen extends StatelessWidget {
                   ),
                   ListTile(
                     onTap: () {},
-                    title: Text('Kunde'),
+                    title: Text('customerLabel').tr(),
                     trailing: Icon(CupertinoIcons.chevron_forward),
                   ),
                   Divider(
@@ -69,7 +130,7 @@ class AddActivityScreen extends StatelessWidget {
                   ),
                   ListTile(
                     onTap: () {},
-                    title: Text('Projekt'),
+                    title: Text('projectLabel').tr(),
                     trailing: Icon(CupertinoIcons.chevron_forward),
                   ),
                 ],
@@ -85,6 +146,22 @@ class AddActivityScreen extends StatelessWidget {
           ),
           TextFormField(
             decoration: InputDecoration(labelText: tr('descriptionLabel')),
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+          ),
+          SizedBox(
+            height: 3.bsv(),
+          ),
+          RaisedButton(
+            onPressed: () {},
+            color: Colors.green,
+            child: Center(
+                child: Text(
+              'saveLabel',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ).tr()),
           ),
         ],
       ),

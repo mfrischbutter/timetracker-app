@@ -4,6 +4,7 @@ import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/models/activity.dart';
 import 'package:timetracker_app/utils/helper.dart';
 import 'package:timetracker_app/utils/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DayListCollection extends StatelessWidget {
   final List groupedActivitiesByDay;
@@ -59,11 +60,11 @@ class DayListCollection extends StatelessWidget {
               yield ListTile(
                 onTap: () {},
                 title: Text(item.ticket),
-                subtitle: Text(item.description ?? 'Keine Beschreibung'),
+                subtitle: Text(item.description ?? tr('noDescription')),
                 trailing: Chip(
                   label: Text(Helper().printDuration(item.duration)),
                   deleteIcon: Icon(
-                    CupertinoIcons.play_fill,
+                    CupertinoIcons.clock,
                     size: 3.5.bsh(),
                   ),
                   backgroundColor: Colors.white,

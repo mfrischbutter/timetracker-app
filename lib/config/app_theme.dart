@@ -53,7 +53,10 @@ class AppTheme {
         fontSize: 18,
       ),
     ),
-    buttonTheme: ButtonThemeData(height: 60),
+    buttonTheme: ButtonThemeData(
+      height: 60,
+      buttonColor: Colors.grey[200],
+    ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.zero,
