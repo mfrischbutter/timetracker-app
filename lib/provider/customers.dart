@@ -14,6 +14,7 @@ enum CustomersStatus {
 class CustomersProvider extends ChangeNotifier {
   CustomersStatus _status = CustomersStatus.Uninitialized;
   List<Customer> _customers;
+  List<DropdownMenuItem<int>> _dropdownList = List();
 
   CustomersStatus get status => _status;
   List<Customer> get customers => _customers;
@@ -28,5 +29,20 @@ class CustomersProvider extends ChangeNotifier {
     _customers = customersFromResponse(jsonDecode(_response.data));
     _status = CustomersStatus.Done;
     notifyListeners();
+  }
+
+  getDropdownList() {
+    if (_dropdownList.length > 0) {
+      return _dropdownList;
+    }
+    _customers.forEach((element) {
+      _dropdownList.add(
+        DropdownMenuItem(
+          child: Text(element.name),
+          value: element.id,
+        ),
+      );
+    });
+    return _dropdownList;
   }
 }

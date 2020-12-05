@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:timetracker_app/api/activity_request.dart';
+import 'package:timetracker_app/provider/customers.dart';
+import 'package:timetracker_app/provider/projects.dart';
+import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/helper.dart';
 import 'package:timetracker_app/utils/size_config.dart';
 
@@ -49,6 +53,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
       ),
     ),
   );
+  List<DropdownMenuItem<int>> _projectsList = List();
 
   @override
   Widget build(BuildContext context) {
@@ -156,45 +161,36 @@ class _AddActivityFormState extends State<AddActivityForm> {
           SizedBox(
             height: 1.bsv(),
           ),
-          Material(
-            color: Colors.grey[200],
-            child: Container(
-              width: 90.bsh(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    onTap: () {},
-                    title: Text('ticketLabel').tr(),
-                    trailing: Icon(CupertinoIcons.chevron_forward),
-                  ),
-                  Divider(
-                    height: 0,
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    title: Text('customerLabel').tr(),
-                    trailing: Icon(CupertinoIcons.chevron_forward),
-                  ),
-                  Divider(
-                    height: 0,
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    title: Text('projectLabel').tr(),
-                    trailing: Icon(CupertinoIcons.chevron_forward),
-                  ),
-                  Divider(
-                    height: 0,
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    title: Text('projectActivityLabel').tr(),
-                    trailing: Icon(CupertinoIcons.chevron_forward),
-                  ),
-                ],
-              ),
-            ),
+          SearchableDropdown.single(
+            items: services.get<CustomersProvider>().getDropdownList(),
+            closeButton: 'fertig',
+            value: _data.customerId ?? 0,
+            hint: tr('customerLabel'),
+            searchHint: tr('customerLabel'),
+            searchFn: _dropdownSearchFn,
+            onChanged: (value) {
+              setState(() {
+                _data.customerId = value;
+                _projectsList = services
+                    .get<ProjectsProvider>()
+                    .getDropdownListByCustomer(value);
+              });
+            },
+            isExpanded: true,
+          ),
+          SearchableDropdown.single(
+            items: _projectsList,
+            closeButton: 'fertig',
+            value: _data.projectsId ?? 0,
+            hint: tr('projectLabel'),
+            searchHint: tr('customerLabel'),
+            searchFn: _dropdownSearchFn,
+            onChanged: (value) {
+              setState(() {
+                _data.projectsId = value;
+              });
+            },
+            isExpanded: true,
           ),
           SizedBox(
             height: 3.bsv(),
@@ -245,4 +241,28 @@ class _AddActivityFormState extends State<AddActivityForm> {
       initialTime: initialTime,
     );
   }
+
+  /// It's like the default search, except it's using the data of the text widget to compare the search value
+  Function _dropdownSearchFn = (String keyword, items) {
+    List<int> ret = List<int>();
+    if (keyword != null && items != null && keyword.isNotEmpty) {
+      keyword.split(" ").forEach((k) {
+        int i = 0;
+        items.forEach((item) {
+          if (k.isNotEmpty &&
+              (item.child.data
+                  .toString()
+                  .toLowerCase()
+                  .contains(k.toLowerCase()))) {
+            ret.add(i);
+          }
+          i++;
+        });
+      });
+    }
+    if (keyword.isEmpty) {
+      ret = Iterable<int>.generate(items.length).toList();
+    }
+    return (ret);
+  };
 }
