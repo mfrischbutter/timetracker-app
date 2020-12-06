@@ -6,6 +6,7 @@ class ActivityRequest {
   TimeOfDay end;
   int customerId;
   int projectsId;
+  int activityId;
 
   ActivityRequest({
     this.date,
@@ -13,6 +14,7 @@ class ActivityRequest {
     this.end,
     this.customerId,
     this.projectsId,
+    this.activityId,
   });
 
   Map<String, dynamic> toMap() => {

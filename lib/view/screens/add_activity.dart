@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:timetracker_app/api/activity_request.dart';
 import 'package:timetracker_app/provider/customers.dart';
+import 'package:timetracker_app/provider/project_activities.dart';
 import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/helper.dart';
@@ -39,16 +40,16 @@ class AddActivityForm extends StatefulWidget {
 }
 
 class _AddActivityFormState extends State<AddActivityForm> {
-  TimeOfDay _futureTime = TimeOfDay.fromDateTime(
-    DateTime.now().add(
+  TimeOfDay _pastTime = TimeOfDay.fromDateTime(
+    DateTime.now().subtract(
       Duration(minutes: 15),
     ),
   );
   ActivityRequest _data = ActivityRequest(
     date: DateTime.now(),
-    start: TimeOfDay.now(),
-    end: TimeOfDay.fromDateTime(
-      DateTime.now().add(
+    end: TimeOfDay.now(),
+    start: TimeOfDay.fromDateTime(
+      DateTime.now().subtract(
         Duration(minutes: 15),
       ),
     ),
@@ -101,7 +102,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
           ),
           RaisedButton(
             onPressed: () async {
-              final time = await _selectTime(context);
+              final time = await _selectTime(context, _pastTime);
               if (time == null) {
                 return;
               }
@@ -132,7 +133,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
           ),
           RaisedButton(
             onPressed: () async {
-              final time = await _selectTime(context, _futureTime);
+              final time = await _selectTime(context);
               if (time == null) {
                 return;
               }
@@ -163,7 +164,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
           ),
           SearchableDropdown.single(
             items: services.get<CustomersProvider>().getDropdownList(),
-            closeButton: 'fertig',
+            closeButton: tr('doneLabel'),
             value: _data.customerId ?? 0,
             hint: tr('customerLabel'),
             searchHint: tr('customerLabel'),
@@ -180,14 +181,28 @@ class _AddActivityFormState extends State<AddActivityForm> {
           ),
           SearchableDropdown.single(
             items: _projectsDropdownList,
-            closeButton: 'fertig',
+            closeButton: tr('doneLabel'),
             value: _data.projectsId ?? 0,
             hint: tr('projectLabel'),
-            searchHint: tr('customerLabel'),
+            searchHint: tr('projectLabel'),
             searchFn: _dropdownSearchFn,
             onChanged: (value) {
               setState(() {
                 _data.projectsId = value;
+              });
+            },
+            isExpanded: true,
+          ),
+          SearchableDropdown.single(
+            items: services.get<ProjectActivitiesProvider>().getDropdownList(),
+            closeButton: tr('doneLabel'),
+            value: _data.activityId ?? 0,
+            hint: tr('projectActivityLabel'),
+            searchHint: tr('projectActivityLabel'),
+            searchFn: _dropdownSearchFn,
+            onChanged: (value) {
+              setState(() {
+                _data.activityId = value;
               });
             },
             isExpanded: true,
