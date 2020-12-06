@@ -53,7 +53,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
       ),
     ),
   );
-  List<DropdownMenuItem<int>> _projectsList = List();
+  List<DropdownMenuItem<int>> _projectsDropdownList = List();
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
             onChanged: (value) {
               setState(() {
                 _data.customerId = value;
-                _projectsList = services
+                _projectsDropdownList = services
                     .get<ProjectsProvider>()
                     .getDropdownListByCustomer(value);
               });
@@ -179,7 +179,7 @@ class _AddActivityFormState extends State<AddActivityForm> {
             isExpanded: true,
           ),
           SearchableDropdown.single(
-            items: _projectsList,
+            items: _projectsDropdownList,
             closeButton: 'fertig',
             value: _data.projectsId ?? 0,
             hint: tr('projectLabel'),
