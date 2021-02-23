@@ -4,7 +4,7 @@ List<Customer> customersFromResponse(List<dynamic> items) =>
 class Customer {
   int id;
   String name;
-  int active;
+  bool active;
   int global;
   List teams;
 
@@ -17,9 +17,9 @@ class Customer {
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) => new Customer(
-        id: int.parse(json['customer']['id']),
+        id: json['customer']['id'],
         name: json['customer']['name'],
-        active: int.parse(json['customer']['active']),
+        active: json['customer']['active'],
         //Theses vars only needed if calling /getAllCustomers
         // global: int.parse(json['customer']['global']),
         // teams: json['customer']['teams'],

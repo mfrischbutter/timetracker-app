@@ -59,7 +59,7 @@ class DayListCollection extends StatelessWidget {
                 );
               yield ListTile(
                 onTap: () {},
-                title: Text(item.ticket),
+                title: Text((item.ticket != '') ? item.ticket : '---'),
                 subtitle: Text(item.description ?? tr('noDescription')),
                 trailing: Chip(
                   label: Text(Helper().printDuration(item.duration)),

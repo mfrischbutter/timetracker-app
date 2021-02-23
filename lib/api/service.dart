@@ -1,4 +1,3 @@
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:timetracker_app/api/api_reponse.dart';
 import 'package:timetracker_app/config/env.dart';
 import 'package:http/http.dart' as http;

@@ -5,11 +5,11 @@ class Project {
   int id;
   String name;
   String jiraId;
-  String ticketSystem;
+  int ticketSystem;
   int customer;
-  int active;
-  int global;
-  String estimation;
+  bool active;
+  bool global;
+  int estimation;
   String estimationText;
 
   Project({
@@ -25,13 +25,13 @@ class Project {
   });
 
   factory Project.fromJson(Map<String, dynamic> json) => new Project(
-        id: int.parse(json['project']['id']),
+        id: json['project']['id'],
         name: json['project']['name'],
         jiraId: json['project']['jiraId'],
         ticketSystem: json['project']['ticket_system'],
-        customer: int.parse(json['project']['customer']),
-        active: int.parse(json['project']['active']),
-        global: int.parse(json['project']['global']),
+        customer: json['project']['customer'],
+        active: json['project']['active'],
+        global: json['project']['global'],
         estimation: json['project']['estimation'],
         estimationText: json['project']['estimationText'],
       );

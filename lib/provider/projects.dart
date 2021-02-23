@@ -34,8 +34,8 @@ class ProjectsProvider extends ChangeNotifier {
   getDropdownListByCustomer(customerId) {
     _dropdownList = List();
     _projects.forEach((element) {
-      if (element.active == 0 ||
-          (element.customer != customerId && element.global == 0)) {
+      if (!element.active ||
+          (element.customer != customerId && !element.global)) {
         return;
       }
       _dropdownList.add(
