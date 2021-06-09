@@ -17,9 +17,9 @@ class Customer {
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) => new Customer(
-        id: int.parse(json['customer']['id']),
+        id: json['customer']['id'],
         name: json['customer']['name'],
-        active: int.parse(json['customer']['active']),
+        active: json['customer']['active'] ? 1 : 0,
         //Theses vars only needed if calling /getAllCustomers
         // global: int.parse(json['customer']['global']),
         // teams: json['customer']['teams'],
