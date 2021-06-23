@@ -12,7 +12,7 @@ class ModalMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.w),
-      height: 20.h,
+      height: 35.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

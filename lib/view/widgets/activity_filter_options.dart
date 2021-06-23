@@ -32,7 +32,10 @@ class _ActivityFilterOptionsState extends State<ActivityFilterOptions> {
           3,
           (int index) {
             return ChoiceChip(
-              label: Text('dayOption$index').tr(),
+              label: Text(
+                'dayOption$index',
+                style: Theme.of(context).textTheme.headline3,
+              ).tr(),
               selected: daysIndex == index,
               onSelected: (bool selected) {
                 services.get<SettingsProvider>().daysToFilterActivities = index;

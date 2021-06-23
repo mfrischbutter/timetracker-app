@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timetracker_app/api/login_request.dart';
-import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/utils/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,9 +30,12 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 80.w,
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 5.h,
+                  ),
                   Image(
                     image: AssetImage('assets/mogic-logo.png'),
-                    height: 25.h,
+                    height: 23.h,
                   ),
                   SizedBox(
                     height: 7.h,
@@ -68,7 +70,6 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 2.h,
           ),
           TextFormField(
-            style: TextStyle(fontSize: 20),
             obscureText: true,
             keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(labelText: tr('passwordLabel')),
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text('activateBiometricAuth').tr(),
               Switch(
-                activeColor: AppTheme.mogicLightBlue,
+                activeColor: Theme.of(context).primaryColor,
                 value: biometricAuth,
                 onChanged: (val) {
                   setState(() {
@@ -102,8 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(
             width: double.infinity,
-            child: RaisedButton(
-              color: AppTheme.mogicLightBlue,
+            child: ElevatedButton(
               onPressed: _submit,
               child: _loading
                   ? CircularProgressIndicator(

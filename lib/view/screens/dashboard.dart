@@ -94,7 +94,7 @@ class DashboardScreen extends StatelessWidget {
   Widget _buildBottomNavigationBar(context) {
     return Container(
       height: 5.5.h,
-      color: AppTheme.mogicLightBlue,
+      color: Theme.of(context).primaryColor,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 3.w),
       child: InkWell(
@@ -121,15 +121,16 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         onPressed: () {
-          Navigator.pushNamed(context, Routes.startActivity);
+          print('floating button pressed');
         },
         child: Container(
           height: 15.w,
           width: 15.w,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1.w),
-              shape: BoxShape.circle,
-              color: AppTheme.mogicLightBlue),
+            border: Border.all(color: Colors.white, width: 1.w),
+            shape: BoxShape.circle,
+            color: Theme.of(context).primaryColor,
+          ),
           child: Icon(Icons.add, size: 8.w),
         ),
       ),

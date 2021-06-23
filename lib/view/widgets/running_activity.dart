@@ -14,8 +14,8 @@ class RunningActivity extends StatelessWidget {
           height: 1.h,
         ),
         Container(
-          padding: EdgeInsets.only(
-              top: 2.h, left: 4.w, right: 4.w, bottom: 1.h),
+          padding:
+              EdgeInsets.only(top: 2.h, left: 4.w, right: 4.w, bottom: 1.h),
           width: 90.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
@@ -24,7 +24,10 @@ class RunningActivity extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [AppTheme.mogicDarkBlue, AppTheme.mogicLightBlue],
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
             ),
           ),
           child: _buildBoxContent(context),
@@ -49,7 +52,7 @@ class RunningActivity extends StatelessWidget {
             ),
             Text(
               '00:03:23',
-              style: TextStyle(fontSize: 26, color: Colors.white),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ],
         ),

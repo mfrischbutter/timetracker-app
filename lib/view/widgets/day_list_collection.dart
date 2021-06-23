@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/models/activity.dart';
 import 'package:timetracker_app/utils/helper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,12 +23,14 @@ class DayListCollection extends StatelessWidget {
         ),
         Text(
           Helper().convertDateTimeWithToday(groupedActivitiesByDay.first.date),
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.headline2.copyWith(
+                color: Color(0xff7d7c7c),
+              ),
         ),
         SizedBox(
           height: 1.h,
         ),
-        _buildActivityList(),
+        _buildActivityList(context),
         SizedBox(
           height: 2.h,
         ),
@@ -37,7 +38,7 @@ class DayListCollection extends StatelessWidget {
     );
   }
 
-  Widget _buildActivityList() {
+  Widget _buildActivityList(BuildContext context) {
     return Container(
       width: 90.w,
       decoration: BoxDecoration(
@@ -59,16 +60,28 @@ class DayListCollection extends StatelessWidget {
                 );
               yield ListTile(
                 onTap: () {},
-                title: Text(item.ticket),
-                subtitle: Text(item.description ?? tr('noDescription')),
+                title: Text(
+                  item.ticket,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                subtitle: Text(
+                  item.description ?? tr('noDescription'),
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
                 trailing: Chip(
-                  label: Text(Helper().printDuration(item.duration)),
+                  label: Text(
+                    Helper().printDuration(item.duration),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(color: Colors.black),
+                  ),
                   deleteIcon: Icon(
                     CupertinoIcons.clock,
                     size: 3.5.w,
                   ),
                   backgroundColor: Colors.white,
-                  deleteIconColor: AppTheme.mogicLightBlue,
+                  deleteIconColor: Theme.of(context).primaryColor,
                   onDeleted: () {},
                 ),
               );

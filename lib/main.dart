@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         title: 'Timetracker',
-        theme: AppTheme.light,
+        theme: defaultTheme,
         routes: Routes.routes,
         initialRoute: _getInitialRoute(context),
       ),
