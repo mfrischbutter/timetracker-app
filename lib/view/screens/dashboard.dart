@@ -10,7 +10,7 @@ import 'package:timetracker_app/provider/projects.dart';
 import 'package:timetracker_app/provider/settings.dart';
 import 'package:timetracker_app/services.dart';
 import 'package:timetracker_app/utils/routes.dart';
-import 'package:timetracker_app/utils/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timetracker_app/view/widgets/activity_filter_options.dart';
 import 'package:timetracker_app/view/widgets/list_of_tracked_activities.dart';
 import 'package:timetracker_app/view/widgets/modal_menu.dart';
@@ -39,7 +39,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _fetchInitialActivities();
-    SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Timeline'),
@@ -73,7 +72,7 @@ class DashboardScreen extends StatelessWidget {
                       return Column(
                         children: [
                           SizedBox(
-                            height: 20.bsv(),
+                            height: 20.h,
                           ),
                           CircularProgressIndicator(),
                         ],
@@ -94,10 +93,10 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(context) {
     return Container(
-      height: 5.5.bsv(),
+      height: 5.5.h,
       color: AppTheme.mogicLightBlue,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 3.bsh()),
+      padding: EdgeInsets.only(left: 3.w),
       child: InkWell(
         onTap: () {
           showBarModalBottomSheet(
@@ -108,7 +107,7 @@ class DashboardScreen extends StatelessWidget {
         child: Icon(
           CupertinoIcons.bars,
           color: Colors.white,
-          size: 8.bsh(),
+          size: 8.w,
         ),
       ),
     );
@@ -116,8 +115,8 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildFloatingActionButton(context) {
     return SizedBox(
-      height: 15.bsh(),
-      width: 15.bsh(),
+      height: 15.w,
+      width: 15.w,
       child: FloatingActionButton(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -125,13 +124,13 @@ class DashboardScreen extends StatelessWidget {
           Navigator.pushNamed(context, Routes.startActivity);
         },
         child: Container(
-          height: 15.bsh(),
-          width: 15.bsh(),
+          height: 15.w,
+          width: 15.w,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1.bsh()),
+              border: Border.all(color: Colors.white, width: 1.w),
               shape: BoxShape.circle,
               color: AppTheme.mogicLightBlue),
-          child: Icon(Icons.add, size: 8.bsh()),
+          child: Icon(Icons.add, size: 8.w),
         ),
       ),
     );

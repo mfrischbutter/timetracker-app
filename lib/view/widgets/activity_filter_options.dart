@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:timetracker_app/provider/settings.dart';
 import 'package:timetracker_app/services.dart';
-import 'package:timetracker_app/utils/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ActivityFilterOptions extends StatefulWidget {
@@ -25,7 +25,7 @@ class _ActivityFilterOptionsState extends State<ActivityFilterOptions> {
 
   _buildBody(daysIndex) {
     return Container(
-      width: 90.bsh(),
+      width: 90.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List<Widget>.generate(

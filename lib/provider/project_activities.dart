@@ -14,7 +14,7 @@ enum ProjectActivitiesStatus {
 class ProjectActivitiesProvider extends ChangeNotifier {
   ProjectActivitiesStatus _status = ProjectActivitiesStatus.Uninitialized;
   List<ProjectActivity> _projectActivities;
-  List<DropdownMenuItem<int>> _dropdownList = List();
+  List<DropdownMenuItem<int>> _dropdownList = [];
 
   ProjectActivitiesStatus get status => _status;
   List<ProjectActivity> get projectActivities => _projectActivities;
@@ -33,7 +33,7 @@ class ProjectActivitiesProvider extends ChangeNotifier {
   }
 
   getDropdownList() {
-    _dropdownList = List();
+    _dropdownList = [];
     _projectActivities.forEach((element) {
       _dropdownList.add(
         DropdownMenuItem(

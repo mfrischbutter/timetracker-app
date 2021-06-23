@@ -14,7 +14,7 @@ enum CustomersStatus {
 class CustomersProvider extends ChangeNotifier {
   CustomersStatus _status = CustomersStatus.Uninitialized;
   List<Customer> _customers;
-  List<DropdownMenuItem<int>> _dropdownList = List();
+  List<DropdownMenuItem<int>> _dropdownList = [];
 
   CustomersStatus get status => _status;
   List<Customer> get customers => _customers;

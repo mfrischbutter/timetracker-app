@@ -4,7 +4,7 @@ import 'package:timetracker_app/api/login_request.dart';
 import 'package:timetracker_app/config/app_theme.dart';
 import 'package:timetracker_app/provider/auth.dart';
 import 'package:timetracker_app/utils/routes.dart';
-import 'package:timetracker_app/utils/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:timetracker_app/utils/validator.dart';
 
@@ -23,21 +23,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
             child: Container(
-              width: 80.bsh(),
+              width: 80.w,
               child: Column(
                 children: [
                   Image(
                     image: AssetImage('assets/mogic-logo.png'),
-                    height: 25.bsv(),
+                    height: 25.h,
                   ),
                   SizedBox(
-                    height: 7.bsv(),
+                    height: 7.h,
                   ),
                   _buildForm(),
                 ],
@@ -57,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: [
           TextFormField(
-            style: TextStyle(fontSize: 20),
             decoration: InputDecoration(labelText: tr('usernameLabel')),
             onSaved: (value) => _data.username = value,
             validator: (value) {
@@ -67,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
           SizedBox(
-            height: 2.bsv(),
+            height: 2.h,
           ),
           TextFormField(
             style: TextStyle(fontSize: 20),
@@ -82,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
           SizedBox(
-            height: 1.bsv(),
+            height: 1.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           SizedBox(
-            height: 1.bsv(),
+            height: 1.h,
           ),
           SizedBox(
             width: double.infinity,

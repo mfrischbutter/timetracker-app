@@ -14,7 +14,7 @@ enum ProjectsStatus {
 class ProjectsProvider extends ChangeNotifier {
   ProjectsStatus _status = ProjectsStatus.Uninitialized;
   List<Project> _projects;
-  List<DropdownMenuItem<int>> _dropdownList = List();
+  List<DropdownMenuItem<int>> _dropdownList = [];
 
   ProjectsStatus get status => _status;
   List<Project> get projects => _projects;
@@ -32,7 +32,7 @@ class ProjectsProvider extends ChangeNotifier {
   }
 
   getDropdownListByCustomer(customerId) {
-    _dropdownList = List();
+    _dropdownList = [];
     _projects.forEach((element) {
       if (element.active == 0 ||
           (element.customer != customerId && element.global == 0)) {

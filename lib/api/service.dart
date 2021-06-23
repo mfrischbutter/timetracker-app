@@ -1,4 +1,3 @@
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:timetracker_app/api/api_reponse.dart';
 import 'package:timetracker_app/config/env.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +24,7 @@ class ApiService {
         days = 31;
     }
     final response = await http.get(
-      _api + '/getData/days/' + days.toString(),
+      Uri.parse(_api + '/getData/days/' + days.toString()),
       headers: {
         'cookie': _sessionId,
       },
@@ -37,7 +36,7 @@ class ApiService {
   Future<ApiResponse> fetchCustomers() async {
     String _sessionId = services.get<AuthProvider>().sessionId;
     final response = await http.get(
-      _api + '/getCustomers',
+      Uri.parse(_api + '/getCustomers'),
       headers: {
         'cookie': _sessionId,
       },
@@ -49,7 +48,7 @@ class ApiService {
   Future<ApiResponse> fetchProjectActivities() async {
     String _sessionId = services.get<AuthProvider>().sessionId;
     final response = await http.get(
-      _api + '/getActivities',
+      Uri.parse(_api + '/getActivities'),
       headers: {
         'cookie': _sessionId,
       },
@@ -61,7 +60,7 @@ class ApiService {
   Future<ApiResponse> fetchProjects() async {
     String _sessionId = services.get<AuthProvider>().sessionId;
     final response = await http.get(
-      _api + '/getProjects',
+      Uri.parse(_api + '/getProjects'),
       headers: {
         'cookie': _sessionId,
       },

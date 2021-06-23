@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timetracker_app/utils/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timetracker_app/view/widgets/day_list_collection.dart';
 
 class ListOfTrackedActivities extends StatelessWidget {
@@ -12,7 +12,7 @@ class ListOfTrackedActivities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90.bsh(),
+      width: 90.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: List.unmodifiable(

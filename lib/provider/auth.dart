@@ -56,7 +56,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> checkLoginStatus() async {
     http.Response response = await http.get(
-      _api + '/status/check',
+      Uri.parse(_api + '/status/check'),
       headers: {'cookie': _sessionId},
     );
     var status = json.decode(response.body);
@@ -71,7 +71,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     http.Response response = await http.post(
-      _api + '/login',
+      Uri.parse(_api + '/login'),
       body: data.toMap(),
     );
 

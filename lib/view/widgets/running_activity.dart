@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timetracker_app/config/app_theme.dart';
-import 'package:timetracker_app/utils/size_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class RunningActivity extends StatelessWidget {
@@ -11,15 +11,15 @@ class RunningActivity extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 1.bsv(),
+          height: 1.h,
         ),
         Container(
           padding: EdgeInsets.only(
-              top: 2.bsv(), left: 4.bsh(), right: 4.bsh(), bottom: 1.bsv()),
-          width: 90.bsh(),
+              top: 2.h, left: 4.w, right: 4.w, bottom: 1.h),
+          width: 90.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
-              Radius.circular(3.bsh()),
+              Radius.circular(3.w),
             ),
             gradient: LinearGradient(
               begin: Alignment.topRight,
@@ -30,7 +30,7 @@ class RunningActivity extends StatelessWidget {
           child: _buildBoxContent(context),
         ),
         SizedBox(
-          height: 1.bsv(),
+          height: 1.h,
         ),
       ],
     );
@@ -54,7 +54,7 @@ class RunningActivity extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 2.bsv(),
+          height: 2.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,10 +65,10 @@ class RunningActivity extends StatelessWidget {
               child: InkWell(
                 onTap: () {},
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20.bsh()),
+                  Radius.circular(20.w),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(2.bsh()),
+                  padding: EdgeInsets.all(2.w),
                   child: Text(
                     'stopLabel',
                     style: Theme.of(context).textTheme.headline2,
